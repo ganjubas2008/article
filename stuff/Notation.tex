@@ -1,0 +1,21 @@
+$ $\par
+Let us introduce useful contractions:
+\begin{align}
+    &r^m_t := \nabla R(x^m_t)
+    &q^m_t := \nabla Q(x^m_t)
+\end{align}
+
+Also for average values:
+\begin{align}
+    &\bar{r}_t := \fsumm {m=1}{M}{\nabla R(x^m_t)} \\
+    &\bar{R}_t := \fsumm {m=1}{M}{R(x^m_t)} \\
+    &\bar{q}_t := \fsumm {m=1}{M}{\nabla Q(x^m_t)} \overset{\text{~\ref{cor:linearity}}}{=}  \nabla Q(\bar{x}_t)
+\end{align}
+
+And for values of $Q$ and $R$ at $x_*$:
+\begin{align}
+    &r_* := \nabla R(x_*)
+    &R_* := R(x_*) \\
+    &q_* := \nabla Q(x_*)
+    &Q_* := Q(x_*)
+\end{align}

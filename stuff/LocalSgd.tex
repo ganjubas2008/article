@@ -1,0 +1,17 @@
+\begin{algorithm}
+    \caption{Local SGD with identical data}
+    \begin{algorithmic}[1]
+        \State \textbf{Input:} Stepsize $\gamma \geq 0$, initial vector $x_0 = x_m^0$ for all $m \in \{1, \ldots, M\}$, synchronization timesteps $t_1, t_2, \ldots$.
+        \For{$t = 0, 1, \ldots$}
+            \For{$m = 1, \ldots, M$ in parallel}
+                \State Sample $z_m \sim D_m$.
+                \State Compute $g_t^m = \nabla F(x_t^m, z_m)$.
+            \EndFor
+            \If{$t = t_p$ for some $p$}
+                \State $x^m_{t+1} = \frac{1}{M} \sum^M_{j = 1} (x^j_t - \gamma g^j_t) $
+            \Else
+                \State $x^m_{t+1} = x_t^m - \gamma g_t^m$ \label{eq:upd_eq}
+            \EndIf
+        \EndFor
+    \end{algorithmic}
+\end{algorithm}

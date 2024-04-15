@@ -1,0 +1,147 @@
+\documentclass{article}
+\usepackage{amsmath, amsthm}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amssymb}
+\usepackage{stackengine}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\E}{\mathbb{E}}
+
+\begin{document}
+
+\section{Постановка}
+Рассмотрим ф-ю $F$, $L$-гладкую, $\mu$-выпуклую. \\
+Пусть На каждом устройстве есть ее несмещённый стох. градиент с дисперсией $\sigma$: $\nabla f(x, z)$:
+\\
+1)\(\E_{z \sim D}[\nabla f(x, z)] = \nabla F(x)\) \\
+2)\(E_{z \sim D}[ \norm{f(x, z) - \nabla F(x)}^2] \leq \sigma^2\)
+
+Рассмотрим два алгоритма:
+Первый коммуницирует каждую итерацию:
+ \[\hat{y}_t := \frac{1}{M} \sum^M_{m=1} y^m_t\]
+ \[y^m_t := \hat{y}_t]\]
+ \[y^m_{t+1} := y^m_{t} - \gamma \nabla f(y^m_t, \xi^m_t) = \hat{y}_t - \gamma \nabla f(\hat{y}_t, \xi^m_t)\]
+ \begin{equation}\label{eq:y_def}
+ \hat{y}_{t+1} = \hat{y}_t - \gamma \nabla f(\hat{y}_t, \xi^m_t)
+ \end{equation}
+
+Второй коммуницирует раз в $H$ итераций:
+ \[\hat{x}_t := \frac{1}{M} \sum^M_{m=1} x^m_t\]
+\[H | t: x^m_t := \hat{x}_t\]
+ \[x^m_{t+1} := x^m_{t} - \gamma \nabla f(x^m_t, z^m_t)\]
+ \begin{equation}\label{eq:y_def}
+ \hat{x}_{t+1} = \hat{x}_t - \gamma \nabla f(x^m_t, z^m_t)
+ \end{equation}
+
+Для первого алгоритма имеем оценку по Мищенко:
+$\norm{x}$
+
+\section{Преподоложение}
+Пусть $F = Q + R$, где $Q$ - квадратичная функция, $R$ - произвольная $\mu_R$ выпуклая и $L_R$ гладкая функция, причем $\mu_R$ м.б. $ = 0$
+
+Рассмотрим \[\norm{\frac{1}{M}\sum^M_{m=1} \nabla F(x^m_t) - \nabla F(\hat{x})}^2 
+=
+\norm{\frac{1}{M}\sum^M_{m=1} \nabla Q(x^m_t) - \nabla Q(\hat{x}) + \frac{1}{M}\sum^M_{m=1} \nabla R(x^m_t) - \nabla R(\hat{x})}^2
+\]
+По линейности $\nabla Q$:
+\[\norm{\frac{1}{M}\sum^M_{m=1} \nabla Q(x^m_t) - \nabla Q(\hat{x}) + \frac{1}{M}\sum^M_{m=1} \nabla R(x^m_t) - \nabla R(\hat{x})}^2 
+=
+\norm{\frac{1}{M}\sum^M_{m=1} \nabla R(x^m_t) - \nabla R(\hat{x})}^2
+\]
+По нер-ву Йенсена и по $L_R$-гладкости:
+\[\norm{\sum^M_{m=1} \nabla R(x^m_t) - \nabla R(\hat{x})}^2 
+\leq 
+\frac{1}{M} \sum^M_{m=1} \norm{\nabla R(x^m_t) - \nabla R(\hat{x})}^2
+\leq 
+L^2_R \frac{1}{M} \sum^M_{m=1} \norm{x^m_t - \hat{x}}^2 =: L^2_R V_t\]
+
+По Лемме 1 Мищенко, \(\E[V_t] \leq (H-1) \gamma^2 \sigma^2\)
+
+Также заметим, что $L_R \leq L_F$, где $L_F = L$, т.к. лень писать + в эту штуку нужно впариться побольше, это даёт хоть какую-то актуальность написанному
+
+Отсюда делаем естественное преположение: пусть $L_R = \varepsilon L_F$
+
+Тогда 
+\[\norm{\frac{1}{M}\sum^M_{m=1} \nabla F(x^m_t) - \nabla F(\hat{x})}^2 
+\leq 
+L^2_R V_t = \varepsilon^2 L^2 V_t\]
+
+
+\begin{equation}\label{eq:main_assumption}
+\E\norm{\frac{1}{M}\sum^M_{m=1} \nabla F(x^m_t) - \nabla F(\hat{x})}^2
+\leq 
+\varepsilon^2 \gamma^2 \sigma^2 L^2 (H-1)
+\end{equation}
+
+\section{Рассуждения}
+
+Будем оценивать $\norm{\hat{y}_t - \hat{x}_t}^2$.
+\[a_t := \hat{y}_t - \hat{x}_t\]
+Утверждение:
+\begin{equation}\label{eq:lemma1}
+\E[\norm{a_{t+1}}^2 | z_t, \xi_t]
+\leq
+(1 - \frac{\gamma \mu}{2}) \norm{a_{t}}^2 + \frac{\varepsilon^2 \gamma^3 \sigma^2 L^2 (H-1)}{\mu} + 
+\frac{4 \gamma^2 \sigma^2}{M} + \varepsilon^2 \gamma^4 \sigma^2 L^2 (H-1)
+\end{equation}
+
+Из ~\eqref{eq:lemma1} получаем:
+\begin{equation}\label{eq:lemma2}
+\E[\norm{a_{T}}^2]
+\leq
+\frac{\varepsilon^2 \gamma^2 \sigma^2 L^2 (H-1)}{\mu^2} + 
+\frac{4 \gamma \sigma^2}{\mu M} + \frac{\varepsilon^2 \gamma^3 \sigma^2 L^2 (H-1)}{\mu}
+\end{equation}
+Т.к. $\gamma \leq \frac{1}{L}$:
+\begin{equation}\label{eq:lemma2'}
+\E[\norm{a_{T}}^2]
+\leq
+\frac{2 \varepsilon^2 \gamma^2 \sigma^2 L^2 (H-1)}{\mu^2}+ 
+\frac{4 \gamma \sigma^2}{\mu M}
+\end{equation}
+
+Так как $\norm{\hat{x}_t - opt}^2 \leq 2 \norm{a_t}^2 + 2 \norm{\hat{y}_t - opt}^2$,
+\begin{equation}\label{eq:lemma2'}
+\E[\norm{\hat{x}_T - opt}^2]
+\leq
+2 (1 - \frac{\gamma \mu}{2})^T \norm{x_0 - opt}^2 + \frac{4 \varepsilon^2 \gamma^2 \sigma^2 L^2 (H-1)}{\mu^2}+ 
+\frac{10 \gamma \sigma^2}{\mu M}
+\end{equation}
+Для сравнения, у Мищенко:
+\begin{equation}\label{eq:lemma2'}
+\E[\norm{\hat{x}_T - opt}^2]
+\leq
+(1 - \gamma \mu)^T \norm{x_0 - opt}^2 + \frac{\gamma^2 \sigma^2 L (H-1)}{\mu}+ 
+\frac{\gamma \sigma^2}{\mu M}
+\end{equation}
+
+При $\varepsilon = 0$ - отдельный случай:
+\begin{equation}\label{eq:lemma_quadratic}
+\E[\norm{\hat{x}_T - opt}^2]
+\leq
+2 (1 - \frac{\gamma \mu}{2})^T \norm{x_0 - opt}^2 + \frac{10 \gamma \sigma^2}{\mu M}
+\end{equation}
+М.б. так же для minibatch
+
+Регуляризация?
+
+\section{Графики}
+М.б. нарисовать график для $\log(1 + e^{x^2})$ - не квадратичная, но классно сходится ($\varepsilon$ маленький)
+
+
+А потом наоборот график для кусочно-квадратичной функции, где сходится ужасно ($\varepsilon$ следует оценить)
+
+Что можно рассказать про примеры из реальной жизни - logloss, logloss + регуляризация? (размер рег. члена не влияет на $L_{F}$
+
+
+\section{Доказательства}
+
+
+\end{document}
