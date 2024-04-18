@@ -1,0 +1,53 @@
+$ $\par
+
+\subsection{General words}
+
+In the ever-evolving landscape of machine learning, we've witnessed the emergence of enormous models like Gemini, boasting trillions of parameters that push the boundaries of computational capacity. Given the impracticality of training such models on a single device, modern machine learning has embraced Federated Learning, a concept initially introduced by \cite{McMahan}. This approach involves distributing data across multiple devices, each conducting local computations, and subsequently communicating to collectively achieve the final result.
+
+\vspace{10pt}
+
+However, the challenge of communication frequency remains unresolved in Federated Learning. Insufficient communication may lead to divergence, while overly frequent communication poses its own set of issues. Consider the scenario of solving an optimization problem within a space of dimensions on the order of $10^9$. The size of each gradient computed locally is measured in gigabytes, making transmission impractical. Thus, striking the delicate balance in communication frequency becomes the key to success in Federated Learning.
+
+\vspace{10pt}
+
+The scientific community has developed sophisticated federated learning frameworks that leverage the idea of rare intermittent communications. Among the most notable are SCAFFOLD \citep{Scaffold} and FedAC \citep{FedAC}. These algorithms are widely utilized in practice, particularly when data distribution varies among computational devices \citep{Hospitals}. Yet, the simplest and most classical algorithm, named Local SGD (also known as FedAvg or Parallel SGD, \cite{Mangasarian}), has been proven to be as efficient as these intricate algorithms when data distribution is similar \citep{KEK LOL}.
+
+Now, let us formally introduce the task we are solving and dive deeper into how Local SGD works.
+We are trying to minimize ...
+
+\vspace{10pt}
+
+\subsection{Local SGD}
+
+One of the primary frameworks for addressing the federated learning problem is known as Local SGD. This method involves executing few consecutive SGD steps locally on each device, averaging the results, and repeating this process for $R$ rounds, resulting in a total of $T$ iterations on each device.
+
+To explain Local SGD in a formal way, let us introduce the problem we are trying to solve. Given that there are $M$ devices and corresponding loss function $F$ that is shared among the devices. Each device can locally compute unbiased stochastic gradient $\mc{g^m} := \nabla F(x^m, z^m)$, where $z^m$ represents the randomness component on the device $m$. The unbiasedness means that $\E [\mc{g^m}] = \nabla F(x^m)$.
+
+\input{algorithms/LocalSgd}
+
+\vspace{10pt}
+
+In both scenarios of identical and heterogeneous settings, extensive research has been conducted across various contexts. \citep{Li} analyzed the non-convex setting under bounded gradient norms. As expected, the further we deviate from the identical and strongly convex settings, the poorer the results become. However, in this work, we will focus solely on convex and strongly convex cases.
+
+\vspace{10pt}
+
+The best results for identical convex case where previously achieved under Lipschitz Hessian assumption \citep{FedAC, Spiridonoff}. 
+\cite{Khaled} provided the best known estimate without any assumptions on Hessian. In out work we show that the result of \cite{Khaled} can be enhanced, especially when objective $F$ is somehow close to quadratic.
+
+\vspace{10pt}
+
+
+\subsection{Related Work}
+
+Following results were proved ... 
+
+Lipschitz Hessian assumption typically does not hold ...
+
+\input{tables/Table}
+
+As evident from these two tables, our work achieves a clear improvement in the estimates obtained by \cite{Khaled}, without resorting to additional assumptions on the Hessian.
+
+% The rest of this paper is organized as follows. In the following section we outline the related
+% literature and compare existing results. In subsection~\ref{subsec:settings} we define the main problem and state our assumptions.
+% We present our theoretical findings in subsection~\ref{subsec:contributions}  followed by numerical experiments in section~\ref{sec:experiments} and
+% proofs in section~\ref{sec:proofs}.

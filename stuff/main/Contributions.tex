@@ -1,0 +1,49 @@
+\subsection{Contributions} \label{subsec:contributions}
+
+In this work, we mainly focus on the improvement in the last term of both convergence rates provided by Khaled et al. in prospect of statement~\ref{st:st_1}.
+
+%THEOREM 1
+\begin{theorem} \label{th:th_1}
+    Under assumptions~\ref{ass:ass_1} and~\ref{ass:ass_2}, decomposing $F$ as announced in~\ref{st:st_1} and considering $\mu > 0$ and $\gamma \leq \frac{1}{6 L}$ gives:
+    \begin{align}
+        \E \norm{\bar{x}_T - x_*}^2
+        \leq
+        (1 - \gamma \mu)^T \norm{x_0 - x_*}^2 
+        + \frac{\gamma \sigma^2}{\mu M} 
+        + \frac{10 \varepsilon \gamma^2 \sigma^2 L (H-1)}{\mu}
+    \end{align}
+\end{theorem}
+
+\begin{corollary} \label{}
+    As it was previously shown in \cite{Woodworth}, an important special case is is achieved when epsilon is equal to zero. Than from the Theorem~\ref{th:th_1} it follows that:
+    \begin{align}
+        \E[\norm{\bar{x}_T - x_*}^2]
+        \leq
+        (1 - \gamma \mu)^T \norm{x_0 - x_*}^2 
+        + \frac{\gamma \sigma^2}{\mu M}
+    \end{align}
+\end{corollary}
+
+Thus, if $F$ is a quadratic function, the upper bound on the rate of convergence is independent of the communication frequency.
+
+\begin{corollary} \label{}
+    Choosing $\gamma$ .... Substituting ....
+    \begin{align}
+        \E[\norm{\bar{x}_T - x_*}^2]
+        \leq
+        exp.decay +
+        \frac{\sigma^2}{\mu^2 MT} + \frac{\varepsilon  \kappa \sigma^2}{\mu^2 TR}
+    \end{align}
+\end{corollary}
+
+
+
+%THEOREM 2
+\begin{theorem} \label{th:th_2}
+    Under assumptions~\ref{ass:ass_1} and~\ref{ass:ass_2}, decomposing $F$ as announced in~\ref{st:st_1} and considering $\mu = 0$ and $\gamma \leq \frac{1}{6 L}$ we have:
+    \begin{align}
+        \E[F(\hat{x}_t) - x_*] \leq
+        \frac{2}{\gamma T} + \frac{2 \gamma \sigma^2}{M} + 20 \varepsilon \gamma^2 L \sigma^2 (H-1)
+    \end{align}
+\end{theorem}
+

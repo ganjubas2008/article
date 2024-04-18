@@ -1,0 +1,50 @@
+
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{2.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{6cm}|}
+\hline
+\textbf{\footnotesize Reference} & \textbf{\footnotesize Not-Lipschitz Hessian} & \textbf{\footnotesize Unbounded Gradient} &\textbf{\footnotesize Noise model} & \textbf{\footnotesize Convergence rate $\E{\norm{r_T}^2}$} \\ \hline
+
+{\footnotesize Vanila SGD} & \greencheck & \greencheck & {\footnotesize Uniform} & 
+{
+$O(exp.decay + \frac{A}{B})$ 
+}
+
+\\ \hline
+{\footnotesize \cite{Stich} } & \greencheck & \redcross & {\footnotesize Uniform} & 
+{\footnotesize
+$O(exp.decay + \frac{A}{B})$
+}
+
+\\ \hline
+{\footnotesize \cite{FedAC}} & \redcross & \greencheck & {\footnotesize Uniform} & 
+{\footnotesize
+$O(exp.decay + \frac{A}{B})$ 
+}
+
+\\ \hline
+{\footnotesize \cite{Spiridonoff}} & \redcross & \greencheck & {\footnotesize Uniform with strong growth} & 
+{\footnotesize
+$O(exp.decay + \frac{A}{B})$ 
+}
+
+\\ \hline
+{\footnotesize \cite{Khaled}} & \greencheck & \redcross & {\footnotesize Uniform} & 
+{\footnotesize
+$O(\frac{\norm{r_0}^2}{T^2} + \frac{\sigma^2}{\mu^2 MT} + \frac{\kappa \sigma^2}{\mu^2 TR})$ 
+}
+
+\\ \hline
+{\footnotesize \textbf{This work}} & \greencheck & \greencheck & {\footnotesize Uniform with strong growth} & 
+{\footnotesize
+$O(exp.decay + \frac{\sigma^2}{\mu^2 MT} + \frac{\varepsilon  \kappa \sigma^2}{\mu^2 TR})$ 
+}
+
+\\ \hline
+
+\end{tabular}
+\caption{Comparison of results for general convex case}
+\label{tab:results}
+\end{table}

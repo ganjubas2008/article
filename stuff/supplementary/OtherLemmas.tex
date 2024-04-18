@@ -1,0 +1,82 @@
+\begin{lemma} \label{lem:var_red}
+    Variance reduction:
+    \begin{align}
+        \E \norm{\bar{\mc{g}}_t - \bar{g}_t}^2 \leq \frac{\sigma^2}{M}
+    \end{align}
+\end{lemma}
+\begin{proof} This is Lemma 3.2 in \cite{Stich}. By independence of $g^m_t$ on each device:
+    \begin{align}
+        \E \norm{\bar{\mc{g}}_t - \bar{g}_t}^2 
+        \leq 
+        \E \norm{\fsumm{m=1}{M}{\mc{g}^m_t - g^m_t}}^2 
+        = \fsumm{m=1}{M} \E \norm{\mc{g}^m_t - g^m_t}^2 \leq \frac{\sigma^2}{M}
+    \end{align}
+\end{proof}
+
+
+
+\begin{lemma} \label{lem:lemma_Vt}
+    \begin{align}
+        \E [V_t] \leq (H-1) \gamma^2 \sigma^2
+    \end{align}
+\end{lemma}
+\begin{proof}
+    This is Lemma 1 in \cite{Khaled}.
+\end{proof}
+
+
+
+\begin{lemma}\label{lem:very_main}
+    For $\gamma \leq \frac{1}{6L}$:
+    \begin{align}
+        \begin{split}
+            \E \norm{\bar{x}_{t+1}-x_*}^2
+            \leq
+            (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 
+            + \frac{\gamma^2 \sigma^2}{M}
+            - \frac{\gamma}{5} \E [F(\bar{x}_t) - F_*] 
+            + 10 \gamma^3 L_R (H-1) \sigma^2
+        \end{split}
+    \end{align}
+\end{lemma}
+\begin{proof}
+    Using the update equation \eqref{eq:upd_eq} we have
+    \begin{align}
+        \norm{\bar{x}_{t+1}-x_*}^2
+        &= \norm{\bar{x}_{t} - \gamma \bar {\mc{g_t}} - x_*}^2
+        = \norm{\bar{x}_{t} - \gamma \bar {\mc{g_t}} - x_* - \gamma \bar{g}_t + \gamma \bar{g}_t}^2 \\
+        &= \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2 
+        + \gamma^2 \norm{\bar {\mc{g_t}} - \bar{g}_t}^2
+        + 2 \gamma \inner{\bar{x}_t - x_* - \gamma \bar{g}_t}{\bar {\mc{g_t}} - \bar{g}_t}
+    \end{align}
+    
+    Taking expectation, 
+    \begin{align}
+        \E \norm{\bar{x}_{t+1}-x_*}^2
+        &= \E \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2
+        + \gamma^2 \E \norm{ \bar {\mc{g_t}} - \bar{g}_t}^2 \label{eq:eq81}
+    \end{align}
+    
+    
+    Taking expectiation of result of Lemma~\ref{lem:main}:
+    \begin{align}
+        \E \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2 
+        &\leq (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 
+        - \frac{\gamma}{5} \E [F(\bar{x}_t) - F_*] 
+        + 10 \gamma L_R \E [V_t] \label{eq:eq82}
+    \end{align}
+
+    Combining \eqref{eq:eq81} with Lemma~\ref{lem:var_red} and Lemma~\ref{lem:lemma_Vt}
+    \begin{align}
+         \E \norm{\bar{x}_{t+1}-x_*}^2
+        &\leq (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 
+        + \gamma^2 \E \norm{ \bar{\mc{g_t}} - \bar{g}_t}^2
+        - \frac{\gamma}{5} \E [F(\bar{x}_t) - F_*] 
+        + 10 \gamma L_R \E [V_t] \\
+        &\leq
+        (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 
+        + \frac{\gamma^2 \sigma^2}{M}
+        - \frac{\gamma}{5} \E [F(\bar{x}_t) - F_*] 
+        + 10 \gamma L_R (H-1) \gamma^2 \sigma^2
+    \end{align}
+\end{proof}

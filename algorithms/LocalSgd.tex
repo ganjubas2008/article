@@ -1,0 +1,19 @@
+\begin{algorithm} \label{alg:localsgd}
+    \caption{Local SGD with identical data}
+    \begin{algorithmic}[1]
+        \State \textbf{Input:} 
+        Stepsize $\gamma \geq 0$, 
+        initial vector $x_0 = x_m^0$ for all $m \in \{1, \ldots, M\}$,
+        \For{$t = 1, \ldots, T = R\cdot H$}
+            \For{$m = 1, \ldots, M$ in parallel}
+                \State Sample $z_m \sim D_m$.
+                \State Compute $\mc{g}_t^m = \nabla F(x_t^m, z_m)$.
+            \EndFor
+            \If{$t+1 \mod H = 0$}
+                \State $x^m_{t+1} = \frac{1}{M} \sum^M_{j = 1} (x^j_t - \gamma \mc{g}^j_t) $
+            \Else
+                \State $x^m_{t+1} = x_t^m - \gamma \mc{g}_t^m$ \label{eq:upd_eq}
+            \EndIf
+        \EndFor
+    \end{algorithmic}
+\end{algorithm}

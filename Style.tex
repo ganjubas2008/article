@@ -10,6 +10,7 @@
 %\usepackage[russian]{babel}
 \usepackage{amssymb}
 \usepackage{hyperref}
+\usepackage{multirow}
 \usepackage{stackengine}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
@@ -21,6 +22,10 @@
 \usepackage{bm}
 \usepackage{subcaption}
 \usepackage{float} % for the H specifier
+\usepackage{amsmath} % For \mathscr
+\usepackage{mathrsfs} % For \mathscr
+\usepackage{calrsfs} % For \mathcal
+\usepackage{dutchcal} % For \mathdutchcal
 
 
 %KHALED BEGIN
@@ -62,6 +67,9 @@
 \newtheorem{assumption}{Assumption}
 
 \theoremstyle{plain}
+\newtheorem{statement}{Statement}
+
+\theoremstyle{plain}
 \newtheorem{corollary}{Corollary}
 
 \theoremstyle{remark}
@@ -78,3 +86,9 @@
 \newcommand{\fsumm}[3]{\frac{1}{M}\sum^{ #2 }_{ #1 } #3}
 \newcommand{\coef}[1]{\biggr[ #1 \biggr]}
 \newcommand{\E}{\mathbb{E}}
+\newcommand{\mc}{\mathcal}
+
+
+\newcommand{\greencheck}{{\color{green}\checkmark}}
+\newcommand{\redcross}{{\color{red}\textbf{\texttimes}}}
+\newcommand{\smallfont}[1]{{\small #1}}

@@ -1,0 +1,37 @@
+Things get more interesting in perspective of expressing $\E[\norm{\bar{x}_{t+1} - x_*}^2]$ through $\E[\norm{\bar{x}_{t} - x_*}^2]$ instead of solving recurrent relation and analyzing $\E[\norm{\bar{x}_T - x_*}^2]$. 
+
+We'll go deeper into the highly convex case because it's more intuitive.
+
+As can be observed from~\ref{lem:main}:
+\begin{align}
+     \E \norm{\bar{x}_{t+1}-x_*}^2
+    &\leq
+    (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 
+    + \frac{\gamma^2 \sigma^2}{M}
+    + 10 \varepsilon \gamma L (H-1) \gamma^2 \sigma^2 \label{eq:recurrent}
+\end{align}
+
+Considering $\varepsilon$ as a function of $x$, we can say that for the functions with Lipschitz Hessian we know that the decay rate of $\varepsilon$ is fast. Following graphs illustrate decay rate of $\varepsilon$ for some functions:
+
+\input{graphs/EpsGraphs}
+\\
+
+In point (b) by LogLoss we consider 
+\begin{equation} \label{eq:logloss}
+    y = -\ln\left(\frac{1}{1 + e^{-x}} \right) + 0.03 {x^2}
+\end{equation}
+
+And in point (c) we analyze well-known function that yields lower bound estimates for Local SGD \citep{LowerBound}.
+\begin{equation} \label{eq:piecewise}
+    \mathcal{F}(x) = \begin{cases} 
+      x^2 / 5 & \text{if } x < 0 \\
+      x^2 & \text{if } x \geq 0 \\
+   \end{cases}
+\end{equation}
+
+Here we can notice that for functions (a) and (b) $\varepsilon$ decreases rapidly because they satisfy Lipschitz Hessian assumption, and for function (c) it remains constant. This may be considered as some additional insight into why 
+$\mathcal{F}$ yields lower bound for Local SGD.
+
+From this example we can observe that equation~\ref{eq:recurrent} provides valuable insights into convergence rate for different types of functions. However, abandoning the assumption of a Lipschitz Hessian means that we cannot estimate the decay rate of epsilon. Therefore conducting a meaningful asymptotic analysis while maintaining generality seems impossible.
+
+Thus our aim is to present our findings within a broader scope, elucidating the physical interpretation of the convergence rate.

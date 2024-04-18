@@ -58,7 +58,7 @@ $ $\par
         &= (1 + \zeta)\norm{\bar{q}_t - q_*}^2 + (1 + \frac{1}{\zeta})\norm{\bar{r}_t - r_*}^2  \label{eq:St_1_1}
     \end{align}
     
-    By $L$ - smoothness and some theorem:
+    By $L$ - smoothness and corollary~\ref{cor:nesterov}:
     \begin{align}
         (1 + \zeta)\norm{\bar{q}_t - q_*}^2 &+ (1 + \frac{1}{\zeta})\norm{\bar{r}_t - r_*}^2 \\
         &\leq 2 L_Q(1 + \zeta)  (Q(\bar{x}_t) - Q_* - \inner {q_*}{\bar{x}_t - x_*})
@@ -75,12 +75,17 @@ $ $\par
 
 
 \begin{lemma} \label{lem:inner_1}
+    \begin{align}
+        -2 \inner{\bar{x}_t - x_*}{\bar{q}_t} &\leq 2 Q_* - 2 Q(\bar{x}_t) - \mu_Q \norm{\bar{x}_t - x_*}^2 \label{eq:St_2}
+    \end{align}
+\end{lemma}
+\begin{proof}
     By $\mu_Q$ - convexity:
     \begin{align}
         -2 \inner{\bar{x}_t - x_*}{\bar{q}_t} &= 2 \inner{x_* - \bar{x}_t} {\bar{q}_t} \\
-        &\leq 2 Q_* - 2 Q(\bar{x}_t) - \mu_Q \norm{\bar{x}_t - x_*}^2 \label{eq:St_2}
+        &\leq 2 Q_* - 2 Q(\bar{x}_t) - \mu_Q \norm{\bar{x}_t - x_*}^2
     \end{align}
-\end{lemma}
+\end{proof}
 
 \begin{lemma} \label{lem:inner_2}
 \begin{align}
@@ -120,7 +125,7 @@ $ $\par
         + \frac{2}{M} \summ{m=1}{M}{\frac{1}{p L_R} \norm{r^m_t-r_*}^2 } \label{eq:St_3_2_1}
     \end{align}
     
-    By some theorem:
+    By corollary~\ref{cor:nesterov}:
     \begin{align}
         \norm{r^m_t-r_*}^2 \leq 2L_R (R(x^m_t) - R_* - \inner {r_*}{x^m_t - x_*}) \label{eq:St_3_2_2}
     \end{align}
@@ -175,7 +180,7 @@ Where $A$ and $B$ are functions of $\zeta$ such that:
             - 2\inner{r_*}{\bar{x}_t - x_*}\coef{\gamma^2 L_R(1+\frac{1}{\zeta}) + \frac{2\gamma}{p}} \label{eq:lol}
         \end{split}
     \end{align}
-    Using the result of Lemma~\ref{lem:mu-lemma}:
+    Using the result of~\ref{cor:mu}:
     \begin{align}
         (1 - \gamma \mu_Q - \gamma \mu_R)\norm{\bar{x}_t - x_*}^2 \leq (1 - \gamma \mu)\norm{\bar{x}_t - x_*}^2 \label{eq:mu-eq}
     \end{align}
@@ -212,7 +217,7 @@ By substituting the expressions in square brackets with $A$ and $B$, we obtain t
         &\gamma L_Q(1+\zeta)= \gamma L_R(1+\frac{1}{\zeta}) + \frac{2}{p} \\
         &L_Q(1+\zeta) = L_R(1+\frac{1}{\zeta}) + \frac{2}{\gamma p} \\
         &L_Q + \zeta L_Q - L_R - \frac{L_R}{\zeta} - \frac{2}{\gamma p} = 0 \\
-        &\zeta L_Q + \zeta^2 L_Q - \zeta L_R - L_R - \frac{2\zeta}{\gamma p} \\
+        &\zeta L_Q + \zeta^2 L_Q - \zeta L_R - L_R - \frac{2\zeta}{\gamma p} = 0\\
         &\zeta^2 L_Q + \zeta (L_Q - L_R - \frac{2}{\gamma p}) - L_R = 0 \\
         &\zeta_{1} := \frac{-(L_Q - L_R - \frac{2}{\gamma p}) + \sqrt{(L_Q - L_R - \frac{2}{\gamma p})^2 + 4 L_Q L_R}}{2L_Q} > 0
     \end{align}
@@ -263,13 +268,13 @@ By substituting the expressions in square brackets with $A$ and $B$, we obtain t
 Combining the results of Sublemmas~\ref{sublem:sublemma_1} and~\ref{sublem:sublemma_2}, 
 we obtain the statement of Lemma ~\ref{lem:Technical}.
 
-
-
-Further, let's denote $A_1$ as $A(\zeta_1)$ and $B_1$ as $B(\zeta_1)$
+Further, let's denote $A(\zeta_1)$ as $A_1$ and $B(\zeta_1)$ as $B_1$
 \begin{lemma} \label{lem:main}
+    Generalization of Lemma 3.1 from \cite{Stich}.
     \begin{align}
         \begin{split}
-            \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2 \leq (1 - \gamma \mu)\norm{\bar{x}_t - x_*}^2  + 10 \gamma L_R V_t
+            \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2 
+            \leq (1 - \gamma \mu)\norm{\bar{x}_t - x_*}^2  - \frac{\gamma}{5} (F(\bar{x}_t) - F_*) + 10 \gamma L_R V_t
         \end{split}
     \end{align}
 \end{lemma}
@@ -311,12 +316,13 @@ Further, let's denote $A_1$ as $A(\zeta_1)$ and $B_1$ as $B(\zeta_1)$
         &= (1 - \gamma \mu)\norm{\bar{x}_t - x_*}^2 + 2 \gamma p L_R V_t
         + 2\gamma (A_1 - 1)(F(\bar{x}_t - F_*)
     \end{align}
-    Given that Lemma~\ref{lem:Technical} holds for $p = 5$ and utilizing the fact that $F(\bar{x}t) - F* \geq 0$:
+    Given that Lemma~\ref{lem:Technical} holds for $p = 5$, we can combine the result of Sublemma~\ref{sublem:sublemma_2} with the fact that $F(\bar{x}_t) - F*\geq 0$ to further strengthen our argument.
     \begin{align}
         \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2 &
         \leq (1 - \gamma \mu)\norm{\bar{x}_t - x_*}^2 + 10 \gamma L_R V_t
         + 2\gamma (A_1 - 1)(F(\bar{x}_t - F_*) \\
-        &\leq (1 - \gamma \mu)\norm{\bar{x}_t - x_*}^2 + 10 \gamma L_R V_t
+        &\leq (1 - \gamma \mu)\norm{\bar{x}_t - x_*}^2 - 2\gamma \frac{1}{10}(F(\bar{x}_t) - F_*) + 10 \gamma L_R V_t
     \end{align}
     Thus completing the proof.
 \end{proof}
+

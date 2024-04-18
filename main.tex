@@ -1,95 +1,66 @@
 \input{Style}
+\begin{document}
 
-\input{stuff/Title}
+%TITLE
+\input{stuff/main/Title}
 
 %BEGIN
-\begin{document}
 \maketitle
 
+%ABSTRACT
 \begin{abstract}
 \input{stuff/Abstract}
 \end{abstract}
 
-
+%MAIN BODY
+%INTRODUCTION
 \section{Introduction}
-\input{stuff/Introduction}
+\input{stuff/main/Introduction}
 
-\section{Settings and Contributions}
-\input{stuff/Contributions}
 
-\section{Experiments}
-\input{stuff/Experiments}
+%SETTINGS AND CONTRIBUTIONS
+\section{Settings and Contributions} 
+\input{stuff/main/Settings}
+\input{stuff/main/Contributions}
+
+%DISCUSSION
+\section{Discussion}
+\input{stuff/main/Discussion}
 
 %REFERENCES
 \bibliographystyle{plain}
 \bibliography{bibliography.bib}
 
+%SUPPLEMENTARY MATERIAL
+%CONTENTS
 \tableofcontents
-
 \newpage
 
-\section{Proofs}
+%PROOFS
+\section{Proofs} \label{sec:proofs}
 
 \subsection{Notation}
-\input{stuff/Notation}
+\input{stuff/supplementary/Notation}
 
 \subsection{Technical lemmas}
-\input{stuff/TechnicalLemmas}
+\input{stuff/supplementary/TechnicalLemmas}
 
 \subsection{Other Lemmas}
-\input{stuff/OtherLemmas}
+\input{stuff/supplementary/OtherLemmas}
 
 \subsection{Proof of Theorem~\ref{th:th_1}}
-\begin{proof}
-    Consider $\gamma \leq \frac{1}{6L}$ and $\mu > 0$.
-    Using the update equation \eqref{eq:upd_eq} we have
-    \begin{align}
-        \norm{\bar{x}_{t+1}-x_*}^2
-        &= \norm{\bar{x}_{t} - \gamma g_t - x_*}^2
-        = \norm{\bar{x}_{t} - \gamma g_t - x_* - \gamma \bar{g}_t + \gamma \bar{g}_t}^2 \\
-        &= \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2 
-        + \gamma^2 \norm{g_t - \bar{g}_t}^2
-        + 2 \gamma \inner{\bar{x}_t - x_* - \gamma \bar{g}_t}{g_t - \bar{g}_t}
-    \end{align}
-    
-    Taking expectation, 
-    \begin{align}
-        \E \norm{\bar{x}_{t+1}-x_*}^2
-        &= \E \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2
-        + \gamma^2 \E \norm{g_t - \bar{g}_t}^2 \label{eq:eq81}
-    \end{align}
-    
-    
-    Taking expectiation of result of Lemma~\ref{lem:main}:
-    \begin{align}
-        \E \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2 
-        \leq (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 + 10 \gamma L_R \E [V_t] \label{eq:eq82}
-    \end{align}
-
-    Combining \eqref{eq:eq81}, \eqref{eq:eq82} with Lemma~\ref{lem:lemma_Vt} and Lemma~\ref{lem:var_red}
-    \begin{align}
-         \E \norm{\bar{x}_{t+1}-x_*}^2
-        &\leq (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 
-        + \gamma^2 \E \norm{g_t - \bar{g}_t}^2
-        + 10 \gamma L_R \E [V_t] \\
-        &\leq
-        (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 
-        + \frac{\gamma^2 \sigma^2}{M}
-        + 10 \gamma L_R (H-1) \gamma^2 \sigma^2 \label{eq:eq83}
-    \end{align}
-
-    Recursing \eqref{eq:eq83}, we obtain
-    \begin{align}
-        \E \norm{\bar{x}_{T}-x_*}^2 
-        & \leq (1 - \gamma \mu)^T \E \norm{\bar{x}_0 - x_*}^2 
-        + \frac{\gamma \sigma^2} {\mu M} 
-        + \frac{10 L_R (H-1) \gamma^2 \sigma^2}{\mu}
-    \end{align}
-
-    It remains to notice that by assumtion~\ref{ass:ass_3} we have $L_R = \varepsilon L$.
-\end{proof}
+\input{stuff/supplementary/ProofTheorem1}
 
 \subsection{Proof of Theorem~\ref{th:th_2}}
+\input{stuff/supplementary/ProofTheorem2}
 
+\textbf{
+Надо сделать упор на 2 вещи:
+\begin{enumerate}
+    \item КРАСИВОЕ улучшение оценок Khaled-a
+    \item Мы работаем в общем случае, а Yuan and Ma в частном
+    \item Упомянуть физ.смысл
+\end{enumerate}
+}
 
 \end{document}

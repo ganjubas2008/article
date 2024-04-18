@@ -1,0 +1,16 @@
+We will leverage the insights from Lemma~\ref{lem:main} to enhance the proofs of Theorem 1 from \cite{Khaled}, thereby obtaining more precise results.
+
+\begin{proof}
+    Consider $\gamma \leq \frac{1}{6L}$ and $\mu > 0$.
+    
+
+    Recursing the result of Lemma~\ref{lem:very_main}, we obtain
+    \begin{align}
+        \E \norm{\bar{x}_{T}-x_*}^2 
+        & \leq (1 - \gamma \mu)^T \E \norm{\bar{x}_0 - x_*}^2 
+        + \frac{\gamma \sigma^2} {\mu M} 
+        + \frac{10 L_R (H-1) \gamma^2 \sigma^2}{\mu}
+    \end{align}
+
+    It remains to notice that by statement~\ref{st:st_1} we have $L_R = \varepsilon L$.
+\end{proof}
