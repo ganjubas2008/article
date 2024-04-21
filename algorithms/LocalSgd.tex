@@ -1,13 +1,13 @@
 \begin{algorithm} \label{alg:localsgd}
-    \caption{Local SGD with identical data}
+    \caption{Local SGD}
     \begin{algorithmic}[1]
         \State \textbf{Input:} 
-        Stepsize $\gamma \geq 0$, 
-        initial vector $x_0 = x_m^0$ for all $m \in \{1, \ldots, M\}$,
+        Initial vector $x_0 = x^m_0$ for all $m \in \{1, \ldots, M\}$; 
+        stepsize $\gamma \geq 0$
         \For{$t = 1, \ldots, T = R\cdot H$}
             \For{$m = 1, \ldots, M$ in parallel}
-                \State Sample $z_m \sim D_m$.
-                \State Compute $\mc{g}_t^m = \nabla F(x_t^m, z_m)$.
+                \State Sample $z^m_t \sim \mathcal{D}$.
+                \State Evaluate stochastic gradient $\mc{g}_t^m = \nabla F(x_t^m, z^m_t)$.
             \EndFor
             \If{$t+1 \mod H = 0$}
                 \State $x^m_{t+1} = \frac{1}{M} \sum^M_{j = 1} (x^j_t - \gamma \mc{g}^j_t) $

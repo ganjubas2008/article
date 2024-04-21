@@ -10,7 +10,7 @@ In this work, we mainly focus on the improvement in the last term of both conver
         \leq
         (1 - \gamma \mu)^T \norm{x_0 - x_*}^2 
         + \frac{\gamma \sigma^2}{\mu M} 
-        + \frac{10 \varepsilon \gamma^2 \sigma^2 L (H-1)}{\mu}
+        + \frac{2 \varepsilon \gamma^2 \sigma^2 L (H-1)}{\mu}
     \end{align}
 \end{theorem}
 
@@ -27,13 +27,16 @@ In this work, we mainly focus on the improvement in the last term of both conver
 Thus, if $F$ is a quadratic function, the upper bound on the rate of convergence is independent of the communication frequency.
 
 \begin{corollary} \label{}
-    Choosing $\gamma$ .... Substituting ....
+    Considering $\gamma$ as a function of $t$ and choosing $\gamma_t$ as in Theorem 2 from \cite{Woodworth}, we obtain:
     \begin{align}
-        \E[\norm{\bar{x}_T - x_*}^2]
+        \E[F(\bar{x}_t) - F(x_*)]
         \leq
-        exp.decay +
-        \frac{\sigma^2}{\mu^2 MT} + \frac{\varepsilon  \kappa \sigma^2}{\mu^2 TR}
+        c \cdot \left(
+        \text{exp} \left(-\frac{\mu T}{4 L}\right) +
+        \frac{\sigma^2}{\mu MT} + \frac{\varepsilon \sigma^2}{\mu^2 TR}
+        \right)
     \end{align}
+    Where $c \in \mathbb{R}$ is some universal constant.
 \end{corollary}
 
 
@@ -42,8 +45,18 @@ Thus, if $F$ is a quadratic function, the upper bound on the rate of convergence
 \begin{theorem} \label{th:th_2}
     Under assumptions~\ref{ass:ass_1} and~\ref{ass:ass_2}, decomposing $F$ as announced in~\ref{st:st_1} and considering $\mu = 0$ and $\gamma \leq \frac{1}{6 L}$ we have:
     \begin{align}
-        \E[F(\hat{x}_t) - x_*] \leq
-        \frac{2}{\gamma T} + \frac{2 \gamma \sigma^2}{M} + 20 \varepsilon \gamma^2 L \sigma^2 (H-1)
+        \E[F(\hat{x}_T)] - F(x_*) \leq
+        \frac{2}{\gamma T} + \frac{2 \gamma \sigma^2}{M} + 12 \varepsilon \gamma^2 L \sigma^2 (H-1)
     \end{align}
+    Where $\hat{x}_T = \frac{1}{T} \summ{t=1}{T} \bar{x}_t$
 \end{theorem}
 
+\begin{corollary} \label{}
+    Choosing $\gamma = \frac{\sqrt{M}}{6 L\sqrt{T}}$ and assuming $M \leq T$ as in \cite{Khaled} yields:
+    \begin{align}
+        \E[F(\hat{x}_T)] - F(x_*)
+        \leq
+          \frac{12 \norm{x_0-x_*}^2}{\sqrt{MT}} + \frac{\sigma^2}{3 L\sqrt{MT}} + \frac{
+          \varepsilon \sigma^2 M}{3LR}
+    \end{align}
+\end{corollary}

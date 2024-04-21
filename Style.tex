@@ -26,6 +26,10 @@
 \usepackage{mathrsfs} % For \mathscr
 \usepackage{calrsfs} % For \mathcal
 \usepackage{dutchcal} % For \mathdutchcal
+\usepackage{nicematrix}
+\usepackage{changepage}
+\usepackage{threeparttable}
+
 
 
 %KHALED BEGIN
@@ -86,9 +90,13 @@
 \newcommand{\fsumm}[3]{\frac{1}{M}\sum^{ #2 }_{ #1 } #3}
 \newcommand{\coef}[1]{\biggr[ #1 \biggr]}
 \newcommand{\E}{\mathbb{E}}
-\newcommand{\mc}{\mathcal}
+
+\newcommand{\mc}{\mathbcal}
 
 
 \newcommand{\greencheck}{{\color{green}\checkmark}}
 \newcommand{\redcross}{{\color{red}\textbf{\texttimes}}}
 \newcommand{\smallfont}[1]{{\small #1}}
+
+\def\O{\mathcal{O}}
+\DeclareMathOperator*{\argmin}{arg\,min}

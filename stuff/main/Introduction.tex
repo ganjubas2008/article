@@ -6,46 +6,62 @@ In the ever-evolving landscape of machine learning, we've witnessed the emergenc
 
 \vspace{10pt}
 
-However, the challenge of communication frequency remains unresolved in Federated Learning. Insufficient communication may lead to divergence, while overly frequent communication poses its own set of issues. Consider the scenario of solving an optimization problem within a space of dimensions on the order of $10^9$. The size of each gradient computed locally is measured in gigabytes, making transmission impractical. Thus, striking the delicate balance in communication frequency becomes the key to success in Federated Learning.
+However, the challenge of communication frequency remains unresolved in Federated Learning. Insufficient communication may lead to divergence, while overly frequent communication poses its own set of issues. Imagine tackling an optimization problem in a space with a dimensions around $10^9$, which occurs often in practice \citep{shahid2021communication}. Each time we compute a gradient locally, it ends up being gigabytes in size, which makes sending it over for transmission quite a challenge. Thus, striking the delicate balance in communication frequency becomes the key to success in Federated Learning.
 
 \vspace{10pt}
 
-The scientific community has developed sophisticated federated learning frameworks that leverage the idea of rare intermittent communications. Among the most notable are SCAFFOLD \citep{Scaffold} and FedAC \citep{FedAC}. These algorithms are widely utilized in practice, particularly when data distribution varies among computational devices \citep{Hospitals}. Yet, the simplest and most classical algorithm, named Local SGD (also known as FedAvg or Parallel SGD, \cite{Mangasarian}), has been proven to be as efficient as these intricate algorithms when data distribution is similar \citep{KEK LOL}.
-
-Now, let us formally introduce the task we are solving and dive deeper into how Local SGD works.
-We are trying to minimize ...
+The scientific community has developed sophisticated federated learning frameworks that leverage the idea of rare intermittent communications. Among the most notable are SCAFFOLD \citep{Scaffold} and FedAC \citep{FedAC}. These algorithms are widely utilized in practice, particularly when data distribution varies among computational devices \citep{Hospitals}. However, the simplest and most classical algorithm, named Local SGD (also known as FedAvg or Parallel SGD, \cite{Mangasarian}), has been proven to be as efficient as these intricate algorithms when data distribution is similar \citep{KEK LOL}. 
+The core concept of Local SGD can be described as follows: each participating device conducts few steps of SGD locally and then devices communicate with each other averaging their models' weights.
 
 \vspace{10pt}
 
-\subsection{Local SGD}
+In environments where the distribution of data remains consistent, such as when computations are distributed within a computational cluster or among processor cores within a single device, Local SGD finds extensive application. This classical algorithm remains actively utilized in modern machine learning applications such as Natural Language Processing (NLP) and computer vision. Recent studies \citep{LocalSGD_LLM, LocalSGD_CV} have underscored its efficiency and effectiveness in identical distribution situations. With its straightforward approach and strong performance, Local SGD continues to play pivotal role in diverse domains of federated learning.
 
-One of the primary frameworks for addressing the federated learning problem is known as Local SGD. This method involves executing few consecutive SGD steps locally on each device, averaging the results, and repeating this process for $R$ rounds, resulting in a total of $T$ iterations on each device.
+\vspace{10pt}
 
-To explain Local SGD in a formal way, let us introduce the problem we are trying to solve. Given that there are $M$ devices and corresponding loss function $F$ that is shared among the devices. Each device can locally compute unbiased stochastic gradient $\mc{g^m} := \nabla F(x^m, z^m)$, where $z^m$ represents the randomness component on the device $m$. The unbiasedness means that $\E [\mc{g^m}] = \nabla F(x^m)$.
+\subsection{Problem formulation}
+
+Now, let us formally introduce the task we are solving. Consider a scenario where \( M \) devices \( 1, 2, \ldots, m \), collectively solving optimization problem, that is finding:
+
+\[ x_* := \arg\min_{x \in \mathbb{R}^d} F(x) \]
+
+Here, \( F(x) \) is defined as the expected value over a distribution \( \mathcal{D} \):
+
+\[ F(x) := \mathbb{E}_{z \sim \mathcal{D}} [F(x, z)] \]
+
+%where \( z \) is sampled from the distribution \( \mathcal{D} \).
+
+Our focus lies on a first-order stochastic oracle, where we have access to the stochastic estimate of \( \nabla F \) on each node. We denote this estimate as \( \nabla F(x, z) \), with \( z \) representing a sample from \( \mathcal{D} \).
+
+This formulation captures a wide range of practical problems, such as Empirical Risk Minimization \citep{Vapnik}. In our case \( F \) denotes the empirical risk (i.e., the average of losses across some data samples) and \( z \) denotes the indices of data samples.
+
+\vspace{10pt}
+
+As we have already mentioned, one of the primary frameworks for addressing such problem is Local SGD. This method involves executing few consecutive SGD steps locally on each device, averaging the results, and repeating this process for $R$ rounds, resulting in a total of $T$ iterations on each device.
 
 \input{algorithms/LocalSgd}
 
 \vspace{10pt}
 
+\subsection{Related work}
+
 In both scenarios of identical and heterogeneous settings, extensive research has been conducted across various contexts. \citep{Li} analyzed the non-convex setting under bounded gradient norms. As expected, the further we deviate from the identical and strongly convex settings, the poorer the results become. However, in this work, we will focus solely on convex and strongly convex cases.
 
 \vspace{10pt}
 
-The best results for identical convex case where previously achieved under Lipschitz Hessian assumption \citep{FedAC, Spiridonoff}. 
-\cite{Khaled} provided the best known estimate without any assumptions on Hessian. In out work we show that the result of \cite{Khaled} can be enhanced, especially when objective $F$ is somehow close to quadratic.
+\cite{Woodworth} demonstrated that in the scenario where the objective function is quadratic, the convergence rate of Local SGD remains independent of communication frequency. This observation aligns with the lower bounds established for Local SGD, indicating that for purely quadratic functions, further enhancement of convergence rate is unattainable.
 
 \vspace{10pt}
 
+The most promising outcomes in the identical convex case, where the function is not quadratic, were previously achieved under the assumption of Lipschitz Hessian \citep{FedAC}. This observation resonates with the findings of \cite{FedAC} and \cite{Spiridonoff}, who concluded that closer proximity to a purely quadratic case correlates with improved convergence estimates.
 
-\subsection{Related Work}
+\vspace{10pt}
 
-Following results were proved ... 
-
-Lipschitz Hessian assumption typically does not hold ...
+Notably, \cite{Khaled} and \cite{Woodworth} provided the best known estimate without any restrictions of the Hessian. In our study, we extend these findings, particularly in cases where the objective function $F$ exhibits proximity to a quadratic form. Importantly, our approach does not assume Hessian Lipschitzness, thus representing a generalization of previous research efforts.
 
 \input{tables/Table}
 
-As evident from these two tables, our work achieves a clear improvement in the estimates obtained by \cite{Khaled}, without resorting to additional assumptions on the Hessian.
+As evident from this table, our work achieves a clear improvement in the estimates obtained by \cite{Khaled}.
 
 % The rest of this paper is organized as follows. In the following section we outline the related
 % literature and compare existing results. In subsection~\ref{subsec:settings} we define the main problem and state our assumptions.

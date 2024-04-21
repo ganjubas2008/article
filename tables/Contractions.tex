@@ -1,0 +1,44 @@
+\renewcommand{\arraystretch}{2.5} % Increase the height of each row by 50%
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|p{12cm}|}
+\hline
+\textbf{Symbol} & \textbf{Meaning} \\
+\hline
+
+$M$ & Number of devices participating in the algorithm \\
+
+$H$ & Communication frequency - devices communicate and average their weights every $H$ iterations \\
+
+\( x^m_t \) & Local weight on the device $m$ at time $t$ \\
+
+\(\bar{x}_t\) & \( \fsumm{m=1}{M} x^m_t \) - average of the weights among all devices at time $t$ \\
+
+
+
+\( \nabla F(x) \) & \( \E[\nabla F(x, z)] \) - expectation of a stochastic gradient \\
+
+\( \bar{F}_t, \ \bar{Q}_t, \ \bar{R}_t \) & \( \fsumm{m=1}{M} F(x^m_t),\ \fsumm{m=1}{M} Q(x^m_t),\ \fsumm{m=1}{M} R(x^m_t) \) respectively \\
+
+
+\( \mc{g}^m_t, \ \mc{q}^m_t, \ \mc{r}^m_t \) & \( \nabla F(x^m_t, z^m_t),\ \nabla Q(x^m_t, z^m_t),\ \nabla R(x^m_t, z^m_t) \) - corresponding stochastic gradient at time t on device $m$ \\
+
+\( \bar{\mc{g}}_t, \ \bar{\mc{q}}_t, \ \bar{\mc{r}}_t \) & \( \fsumm{m=1}{M} \mc{g}^m_t,\ \fsumm{m=1}{M} \mc{q}^m_t,\ \fsumm{m=1}{M} \mc{r}^m_t \) - average of stochastic gradients at time $t$ \\
+
+\( g^m_t, \ q^m_t, \ r^m_t \) & \( \nabla F(x^m_t),\ \nabla Q(x^m_t),\ \nabla R(x^m_t) \) - expected value of stochastic gradients at time t on device $m$ (namely, 
+\( \E[\mc{g}^m_t], \ \E[\mc{q}^m_t], \ \E[\mc{r}^m_t] \)) \\
+
+\( \bar{{g}}_t, \ \bar{{q}}_t, \ \bar{{r}}_t \) & \( \fsumm{m=1}{M} {g}^m_t,\ \fsumm{m=1}{M} {q}^m_t,\ \fsumm{m=1}{M} {r}^m_t \) - average of expected values of gradients at time $t$ \\
+
+\( r_*, q_*, R_*, Q_* \) & \( \nabla R(x_*), \nabla Q(x_*), R(x_*), Q(x_*) \) - values at the optimum \\
+
+
+\( V_t \) & \( \fsumm{m=1}{M} \norm{x^m_t-\bar{x}_t}^2 \) - mean deviation of $x^m_t$ from $\bar{x}_t$\\
+
+\( D,\ \norm{r_t} \) & \( \norm{\bar{x_t} - x_*} \) - distance to the optimum at time $t$ \\
+
+\hline
+\end{tabular}
+\caption{Notation summary}
+\label{tab:notation}
+\end{table}

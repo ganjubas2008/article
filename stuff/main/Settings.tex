@@ -2,7 +2,7 @@
 
 %Convexity and nabla-Lipschitzness
 \begin{assumption} \label{ass:ass_1}
-    Assume that $F$ is $\mu$-strongly convex and $L$-smooth. That is, $\forall x, y \in \mathbb{R}^d$,
+    Assume that $F$ is $\mu$-convex and $L$-smooth. That is, $\forall x, y \in \mathbb{R}^d$,
     \[
     \frac{\mu}{2} \norm{x - y}^2 \leq F(y) - F(x) - \inner{\nabla F(x)}{y-x} \leq \frac{L}{2} \norm {x-y}^2
     \]
@@ -11,16 +11,17 @@
 \begin{corollary} \label{cor:nesterov}
 Under assumption~\ref{ass:ass_1}
     \[
-    \frac{1}{2L} \norm{\nabla F(x) - \nabla F(y)} \leq F(y) - F(x) - \inner{\nabla F(x)}{y-x}
+    \frac{1}{2L} \norm{\nabla F(x) - \nabla F(y)}^2 \leq F(y) - F(x) - \inner{\nabla F(x)}{y-x}
     \]
 \end{corollary}
 \proof{
     This is Theorem 2.1.5 in \cite{Nesterov}
 }
 
+
 %Bounded stochastic gradient variance
 \begin{assumption} \label{ass:ass_2}
-    Assume that for stochastic gradient variance is bounded, i.e. exists such $\sigma$ that:
+    Exist such constant $\sigma$ and such $\rho$ that:
     \[\E_{z \sim \mathcal{D}} \norm {\nabla F(x, z) - \nabla F(x)}^2 \leq \sigma^2
     + \rho \norm{\nabla F(x)}^2 \]
 \end{assumption}
@@ -35,15 +36,12 @@ Under assumption~\ref{ass:ass_1}
 Note that such decomposition always takes place beacuse we can take $Q = 0$ and $R = F$.
 
 
-In prospect of statement ~\ref{st:st_1}, following takes place:
 \begin{corollary} \label{cor:linearity}
-    $\nabla Q$ is a linear function
-\end{corollary}
+    In the prospect of statement~\ref{st:st_1}, following takes place: $\,$
+    \begin{enumerate}
+    \item[a)] $\nabla Q$ is a linear function
+    \item[b)] \(\varepsilon \leq 1\)
 
-\begin{corollary}
-    \(\varepsilon \leq 1\)
-\end{corollary}
-
-\begin{corollary} \label{cor:mu}
-    \(\mu_Q + \mu_R \leq \mu\)
+    \item[c)] \(\mu_Q + \mu_R \leq \mu\)
+\end{enumerate}
 \end{corollary}

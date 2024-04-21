@@ -1,25 +1,9 @@
 $ $\par
-Let us introduce useful contractions:
-\begin{align}
-    &\mc{g}^m_t := \nabla F(x^m_t, z^m_t) \\
-    &\mc{r}^m_t := \nabla R(x^m_t, z^m_t) \\
-    &\mc{q}^m_t := \nabla Q(x^m_t, z^m_t) \\
-    &g^m_t := \nabla F(x^m_t) \\
-    &r^m_t := \nabla R(x^m_t) \\
-    &q^m_t := \nabla Q(x^m_t) \\
-\end{align}
+To begin with, let us introduce useful contractions. 
+By the capital Latin letters \( F, \ Q, \ R \) we will denote functions. 
+Corresponding stochastic gradients will be represented by the bold Gothic lowercase Latin letters \( \mc{g}, \ \mc{q}, \ \mc{r} \), and the straight lowercase Latin letters \( g, \ q, \ r \) will denote the expectations of the gradients.
 
-Also for average values:
-\begin{align}
-    &\bar{r}_t := \fsumm {m=1}{M}{\nabla R(x^m_t)} \\
-    &\bar{R}_t := \fsumm {m=1}{M}{R(x^m_t)} \\
-    &\bar{q}_t := \fsumm {m=1}{M}{\nabla Q(x^m_t)} \overset{\text{~\ref{cor:linearity}}}{=}  \nabla Q(\bar{x}_t)
-\end{align}
+A bar above the letter (i.e., \( \bar{g} \)) will indicate that we take the average of this value among all devices.
 
-And for values of $Q$ and $R$ at $x_*$:
-\begin{align}
-    &r_* := \nabla R(x_*)
-    &R_* := R(x_*) \\
-    &q_* := \nabla Q(x_*)
-    &Q_* := Q(x_*)
-\end{align}
+
+\input{tables/Contractions}

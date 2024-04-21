@@ -189,13 +189,22 @@ abstract = {Federated learning is a machine learning method that allows decentra
       primaryClass={stat.ML}
 }
 
-@misc{LocalSGD2024,
+@misc{LocalSGD_LLM,
       title={Asynchronous Local-SGD Training for Language Modeling}, 
       author={Bo Liu and Rachita Chhaparia and Arthur Douillard and Satyen Kale and Andrei A. Rusu and Jiajun Shen and Arthur Szlam and Marc'Aurelio Ranzato},
       year={2024},
       eprint={2401.09135},
       archivePrefix={arXiv},
       primaryClass={cs.LG}
+}
+
+@misc{LocalSGD_CV,
+      title={ImageNet Challenging Classification with the Raspberry Pi: An Incremental Local Stochastic Gradient Descent Algorithm}, 
+      author={Thanh-Nghi Do},
+      year={2022},
+      eprint={2203.11853},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
 }
 
 @misc{Gemini,
@@ -231,4 +240,25 @@ abstract = {Federated learning is a machine learning method that allows decentra
   pdf = 	 {http://proceedings.mlr.press/v54/mcmahan17a/mcmahan17a.pdf},
   url = 	 {https://proceedings.mlr.press/v54/mcmahan17a.html},
   abstract = 	 {Modern mobile devices have access to a wealth of data suitable for learning models, which in turn can greatly improve the user experience on the device. For example, language models can improve speech recognition and text entry, and image models can automatically select good photos. However, this rich data is often privacy sensitive, large in quantity, or both, which may preclude logging to the data center and training there using conventional approaches.  We advocate an alternative that leaves the training data distributed on the mobile devices, and learns a shared model by aggregating locally-computed updates. We term this decentralized approach Federated Learning.  We present a practical method for the federated learning of deep networks based on iterative model averaging, and conduct an extensive empirical evaluation, considering five different model architectures and four datasets. These experiments demonstrate the approach is robust to the unbalanced and non-IID data distributions that are a defining characteristic of this setting. Communication costs are the principal constraint, and we show a reduction in required communication rounds by 10-100x as compared to synchronized stochastic gradient descent. }
+}
+
+@inproceedings{Vapnik,
+ author = {Vapnik, V.},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {J. Moody and S. Hanson and R.P. Lippmann},
+ pages = {},
+ publisher = {Morgan-Kaufmann},
+ title = {Principles of Risk Minimization for Learning Theory},
+ url = {https://proceedings.neurips.cc/paper_files/paper/1991/file/ff4d5fbbafdf976cfdc032e3bde78de5-Paper.pdf},
+ volume = {4},
+ year = {1991}
+}
+
+@misc{shahid2021communication,
+      title={Communication Efficiency in Federated Learning: Achievements and Challenges}, 
+      author={Osama Shahid and Seyedamin Pouriyeh and Reza M. Parizi and Quan Z. Sheng and Gautam Srivastava and Liang Zhao},
+      year={2021},
+      eprint={2107.10996},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
 }

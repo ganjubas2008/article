@@ -1,6 +1,6 @@
 Things get more interesting in perspective of expressing $\E[\norm{\bar{x}_{t+1} - x_*}^2]$ through $\E[\norm{\bar{x}_{t} - x_*}^2]$ instead of solving recurrent relation and analyzing $\E[\norm{\bar{x}_T - x_*}^2]$. 
 
-We'll go deeper into the highly convex case because it's more intuitive.
+%We'll go deeper into the strongly convex case because it's more intuitive.
 
 As can be observed from~\ref{lem:main}:
 \begin{align}
@@ -16,7 +16,7 @@ Considering $\varepsilon$ as a function of $x$, we can say that for the function
 \input{graphs/EpsGraphs}
 \\
 
-In point (b) by LogLoss we consider 
+In point (b) by LogLoss we mean 
 \begin{equation} \label{eq:logloss}
     y = -\ln\left(\frac{1}{1 + e^{-x}} \right) + 0.03 {x^2}
 \end{equation}
@@ -29,7 +29,7 @@ And in point (c) we analyze well-known function that yields lower bound estimate
    \end{cases}
 \end{equation}
 
-Here we can notice that for functions (a) and (b) $\varepsilon$ decreases rapidly because they satisfy Lipschitz Hessian assumption, and for function (c) it remains constant. This may be considered as some additional insight into why 
+Here we can notice that for functions (a) and (b) $\varepsilon$ decreases rapidly (because they satisfy Lipschitz Hessian assumption), and for function (c) it remains constant. This may be considered as some additional insight into why 
 $\mathcal{F}$ yields lower bound for Local SGD.
 
 From this example we can observe that equation~\ref{eq:recurrent} provides valuable insights into convergence rate for different types of functions. However, abandoning the assumption of a Lipschitz Hessian means that we cannot estimate the decay rate of epsilon. Therefore conducting a meaningful asymptotic analysis while maintaining generality seems impossible.

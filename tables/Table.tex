@@ -1,50 +1,160 @@
-
-
-
 \begin{table}[H]
+
+\caption{Summary of similar works}
+
+\renewcommand{\arraystretch}{2} % Increase the height of each row
+\begin{adjustwidth}{-5cm}{-5cm} % Adjust the margins by -1cm on each side
 \centering
-\begin{tabular}{|p{2.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{6cm}|}
+\footnotesize
+
+\begin{threeparttable}
+\begin{tabular}{|p{2cm}|p{1.7cm}|p{1.7cm}|p{1.5cm}|p{1.5cm}|p{6cm}|}
 \hline
-\textbf{\footnotesize Reference} & \textbf{\footnotesize Not-Lipschitz Hessian} & \textbf{\footnotesize Unbounded Gradient} &\textbf{\footnotesize Noise model} & \textbf{\footnotesize Convergence rate $\E{\norm{r_T}^2}$} \\ \hline
+\textbf{Reference} &
+\textbf{Not-Lipschitz Hessian} &
+\textbf{Unbounded Gradient} &
+\textbf{Noise model} &
+\textbf{Convexity} & 
+\textbf{Convergence rate, $\E[F(.)] - F(x_=) \leq$} \\
 
-{\footnotesize Vanila SGD} & \greencheck & \greencheck & {\footnotesize Uniform} & 
-{
-$O(exp.decay + \frac{A}{B})$ 
-}
+% \hline
 
-\\ \hline
-{\footnotesize \cite{Stich} } & \greencheck & \redcross & {\footnotesize Uniform} & 
-{\footnotesize
-$O(exp.decay + \frac{A}{B})$
-}
+% %_____________________%
+% \multirow{2}{=}{Vanila SGD} &
+% \multirow{2}{=}{\greencheck} &
+% \multirow{2}{=}{\greencheck} &
+% \multirow{2}{=}{Uniform} 
+% & 
+% $\mu=0$ & $O(exp.decay + \frac{A}{B})$ \\
+% & & & & 
+% $\mu > 0$ & $O(exp.decay + \frac{A}{B})$ \\
+% %_____________________%
 
-\\ \hline
-{\footnotesize \cite{FedAC}} & \redcross & \greencheck & {\footnotesize Uniform} & 
-{\footnotesize
-$O(exp.decay + \frac{A}{B})$ 
-}
+\hline
 
-\\ \hline
-{\footnotesize \cite{Spiridonoff}} & \redcross & \greencheck & {\footnotesize Uniform with strong growth} & 
-{\footnotesize
-$O(exp.decay + \frac{A}{B})$ 
-}
+%_____________________%
+\multirow{2}{=}{\cite{Stich}} &
+\multirow{2}{=}{\redcross (?)} &
+\multirow{2}{=}{\redcross} &
+\multirow{2}{=}{Uniform} 
+& 
+$\mu=0$ & - \\
+& & & & 
+$\mu > 0$ & $\O \left(
+  			\frac{D^2}{R^3} + \frac{\sigma^2}{\mu M T} + 
+  			\frac{\kappa G^2}{\mu R^2} \right)$ \tnote{{\color{blue}(G-note)}} \\
+%_____________________%
 
-\\ \hline
-{\footnotesize \cite{Khaled}} & \greencheck & \redcross & {\footnotesize Uniform} & 
-{\footnotesize
-$O(\frac{\norm{r_0}^2}{T^2} + \frac{\sigma^2}{\mu^2 MT} + \frac{\kappa \sigma^2}{\mu^2 TR})$ 
-}
+\hline
 
-\\ \hline
-{\footnotesize \textbf{This work}} & \greencheck & \greencheck & {\footnotesize Uniform with strong growth} & 
-{\footnotesize
-$O(exp.decay + \frac{\sigma^2}{\mu^2 MT} + \frac{\varepsilon  \kappa \sigma^2}{\mu^2 TR})$ 
-}
+%_____________________%
+\multirow{2}{=}{\cite{FedAC}} &
+\multirow{2}{=}{\redcross} &
+\multirow{2}{=}{\greencheck} &
+\multirow{2}{=}{Uniform} 
+& 
+$\mu=0$ & $\tilde{\O} \left( 
+            \frac{LD^2}{T} + \frac{\sigma D}{\sqrt{MT}} + \frac{Q^{\frac{1}{3}} \sigma^{\frac{2}{3}} D^{\frac{5}{3}}}{T^{\frac{1}{3}} R^{\frac{1}{3}}}
+        \right)$ \tnote{{\color{blue}(Q-note)}} \\
+& & & & 
+$\mu > 0$ & $\tilde{\O} \left(\text{exp. decay} + \frac{\sigma^2}{\mu M T} + \frac{Q^2                     \sigma^4}{\mu^5 T^2 R^2}   \right)$ \\
+%_____________________%
 
-\\ \hline
+\hline
+
+%_____________________%
+\multirow{2}{=}{\cite{Spiridonoff}} &
+\multirow{2}{=}{\greencheck} &
+\multirow{2}{=}{\greencheck} &
+\multirow{2}{=}{Uniform with strong growth \tnote{{\color{blue}($\rho$-note)}}} 
+& 
+$\mu=0$ & - \\
+& & & & 
+$\mu > 0$ & $\O \left( 
+  			\frac{(1 + \rho \kappa^2\ln(TR^{-2})) D^2}{\kappa^{-2}T^2} + 
+  			\frac{\kappa \sigma^2}{\mu M T} + \frac{\kappa^2 \sigma^2}{\mu T R}\right) \\
+%_____________________%
+
+\hline
+
+%_____________________%
+\multirow{2}{=}{\cite{Khaled}} &
+\multirow{2}{=}{\greencheck} &
+\multirow{2}{=}{\greencheck} &
+\multirow{2}{=}{Uniform} 
+& 
+$\mu=0$ & ${\O} \left(
+          \frac{D^2}{\sqrt{MT}} + \frac{\sigma^2}{L\sqrt{MT}} + \frac{\sigma^2 M}{LR}
+          \right)$ \tnote{{\color{blue}(improve-lr)}} \\ 
+& & & & 
+$\mu > 0$ & $\tilde{\O} \left( 
+  			\frac{L D^2 }{T^2} + 
+  			\frac{L \sigma^2}{\mu^2 M T} + \frac{L^2 \sigma^2}{\mu^3 T R} \right)$ \\
+%_____________________%
+
+\hline
+
+%_____________________%
+\multirow{4}{=}{\textbf{This work}} &
+\multirow{2}{=}{\greencheck} &
+\multirow{2}{=}{\greencheck} &
+\multirow{2}{=}{Uniform} 
+& 
+$\mu=0$ & ${\O} \left(
+          \frac{D^2}{\sqrt{MT}} + \frac{\sigma^2}{L\sqrt{MT}} + \frac{
+          \bm{\varepsilon} \sigma^2 M}{LR} \right)$ 
+          \tnote{{\color{blue}($\varepsilon$-note)}}
+          \\
+          
+& & & & 
+$\mu > 0$ & $\tilde{\O} \left( 
+  			\frac{L D^2 }{T^2} + 
+  			\frac{L \sigma^2}{\mu^2 M T} + \frac{
+     \bm{\varepsilon} L^2 \sigma^2}{\mu^3 T R} \right)$ 
+     \\
+%_____________________%
+
+\cline{2-6}
+
+%_____________________%
+\multirow{4}{=}{} &
+\multirow{2}{=}{\greencheck} &
+\multirow{2}{=}{\greencheck} &
+\multirow{2}{=}{Uniform with strong growth} 
+& 
+$\mu=0$ & - \\
+& & & & 
+$\mu > 0$ & - \\
+%_____________________%
+
+\hline
 
 \end{tabular}
-\caption{Comparison of results for general convex case}
-\label{tab:results}
+\begin{tablenotes}
+\begin{itemize}
+    \item General notation: 
+    $\O$ omits constant factors;
+    $\tilde{\O}$ omits polylogarithmic and constant factors.
+    $D = \norm{x_0-x_*}$ - initial distance from minimum;
+    $\sigma$ - variance of stochastic gradient, see ass.~\ref{ass:ass_2}; 
+    $\mu$ is a strong convexity constant 
+    and $L$ is a Lipshitz gradient constant, see ass.~\ref{ass:ass_1};
+    $M$ - number of workers;
+    $R$ - number of communication rounds;
+    $T$ - total number of iterations. For more detailed explanation see table~\ref{tab:notation}
+    
+    \item \tnote{{\color{blue}($\rho$-note)}} $\rho$ came from ass.~\ref{ass:ass_2}
+
+    \item \tnote{{\color{blue}(improve-lr)}} Шаг следует выбрать поинтереснее
+    
+    \item \tnote{{\color{blue}($\varepsilon$-note)}} $\varepsilon$ shows how far function is from quadratic; 
+    for all functions $\varepsilon \leq 1$ and for quadratic functions $\varepsilon = 0$. For more details see st.~\ref{st:st_1}
+\end{itemize}
+\end{tablenotes}
+\end{threeparttable}
+
+\end{adjustwidth} % End of adjustwidth environment
+
+\label{tab:different_row_counts}
+
 \end{table}
