@@ -1,8 +1,32 @@
-\begin{lemma} \label{lem:rho}
+
+% \begin{lemma} \label{lem:rho}
+%     \begin{align}
+%         \frac{1}{M} \summ{m=1}{M} \E \norm{\mc{g}^m_t - g^m_t}^2
+%         &\leq
+%         \sigma^2 + 2 \rho L^2 (\bar{F}_t - F_*)
+%     \end{align}
+% \end{lemma}
+% \begin{proof}
+%     \begin{align}
+%         \frac{1}{M} \summ{m=1}{M} \E \norm{\mc{g}^m_t - g^m_t}^2
+%         &\overset{~\ref{ass:ass_2}}{\leq}
+%         \sigma^2 + \frac{\rho}{M} \summ{m=1}{M} \norm {g^m_t}^2 \\
+%         &=
+%         \sigma^2 + \frac{\rho}{M} \summ{m=1}{M} \norm {\nabla F(x^m_t) - \nabla F(x_*)}^2 \\
+%         &\leq
+%         \sigma^2 + \frac{2 \rho L^2}{M} \summ{m=1}{M} {F(x^m_t) - F_*} \\
+%         &\leq 
+%         \sigma^2 + 2 \rho L^2 (\bar{F}_t - F_*)
+%     \end{align}
+% \end{proof}
+
+
+
+\begin{lemma} \label{lem:rho_2}
     \begin{align}
         \frac{1}{M} \summ{m=1}{M} \E \norm{\mc{g}^m_t - g^m_t}^2
         &\leq
-        \sigma^2 + 2 \rho L (\bar{F}_t - F_*)
+        \sigma^2 + \rho L^2 V_t + \rho L^2 \norm{r_t}^2
     \end{align}
 \end{lemma}
 \begin{proof}
@@ -13,11 +37,19 @@
         &=
         \sigma^2 + \frac{\rho}{M} \summ{m=1}{M} \norm {\nabla F(x^m_t) - \nabla F(x_*)}^2 \\
         &\leq
-        \sigma^2 + \frac{2 \rho L}{M} \summ{m=1}{M} {F(x^m_t) - F_*} \\
-        &\leq 
-        \sigma^2 + 2 \rho L (\bar{F}_t - F_*)
+        \sigma^2 + \frac{\rho L^2}{M} \summ{m=1}{M} \norm{x^m_t - x_*}^2 \\
+        &=
+        \sigma^2 + \frac{\rho L^2}{M} \summ{m=1}{M} \norm{x^m_t - \bar{x}_t + \bar{x}_t - x_*}^2 \\
+        &=
+        \sigma^2 + \frac{\rho L^2}{M} \summ{m=1}{M} \left( \norm{x^m_t - \bar{x}_t}^2
+        + \norm{\bar{x}_t - x_*}^2 + 2\inner{x^m_t - \bar{x}_t}{\bar{x}_t - x_*} \right) \\
+        &=
+        \sigma^2 + \frac{\rho L^2}{M} \summ{m=1}{M} \left( \norm{x^m_t - \bar{x}_t}^2
+        + \norm{\bar{x}_t - x_*}^2 \right) \\
+        &= \sigma^2 + \rho L^2 \left( V_t + \norm{r_t}^2 \right)
     \end{align}
 \end{proof}
+
 
 
 \begin{lemma} \label{lem:var_red}
@@ -25,7 +57,7 @@
     \begin{align}
         \E \norm{\bar{\mc{g}}_t - \bar{g}_t}^2 
         \leq 
-        \frac{\sigma^2}{M} + \frac{2 \rho L }{M}(\bar{F}_t - F_*)
+        \frac{\sigma^2}{M} + \frac{\rho L^2 }{M} V_t  + \frac{\rho L^2 }{M} \norm{r_t}^2
     \end{align}
 \end{lemma}
 \begin{proof} In the first equality we use that $g^m_t$ on each device are independent, and in the second inequality we use Lemma~\ref{lem:rho}.
@@ -36,21 +68,58 @@
         &=
         \frac{1}{M^2} \summ{m=1}{M} \E \norm{\mc{g}^m_t - g^m_t}^2 \\
         &\leq
-        \frac{\sigma^2}{M} + \frac{2 \rho L }{M}(\bar{F}_t - F_*)
+        \frac{\sigma^2}{M} + \frac{\rho L^2 }{M} V_t  + \frac{\rho L^2 }{M} \norm{r_t}^2
     \end{align}
 \end{proof}
 
 
 
 \begin{lemma} \label{lem:lemma_Vt}
+
+$\,$ 
+
+    If $\rho = 0$ and $\gamma \leq \frac{1}{6L}$, then:
     \begin{align}
         \E [V_t] 
-        \leq
-        (H-1) \gamma^2 \sigma^2 + 2 \rho (H-1) \gamma^2 L^2 \norm{r_0}^2
+        \leq 
+        (H - 1) \gamma^2 \sigma^2
     \end{align}
+
+    Under following assumptions:
+    
+    \begin{itemize}
+
+    \item $\mu > 0$
+    \item $\gamma \leq \frac{\mu}{12\rho L^2}$
+    \item For all $t$ it is true that $\norm{r_{t+1}}^2 \geq (1-\frac{\gamma \mu}{12}) \norm{r_t}^2$
+
+    \end{itemize}
+    
+    it is true that
+    \begin{align}
+        \E [V_t]
+        \leq
+        (H-1) \gamma^2 \sigma^2 +
+        (H-1) \rho \gamma^2 L^2 \E \norm{r_t}^2
+    \end{align}
+
 \end{lemma}
+
 \begin{proof}
-    We repeat the proof of Lemma 1 from \cite{Khaled} but under Assumption~\ref{ass:ass_2}.
+    This result is a compilation of results obtained in Sublemmas~\ref{sublem:vt=0} and~\ref{sublem:vt>0}
+\end{proof}
+
+\begin{sublemma} \label{sublem:vt_base}
+    \begin{align}
+        \E [V_{t+1}]
+        &\leq
+        (1 - \frac {\gamma \mu}{6} + \gamma^2 \rho L^2) V_t
+        +  \gamma^2 \sigma^2 + \gamma^2 \rho L^2 \norm{r_t}^2
+    \end{align}
+\end{sublemma}
+
+\begin{proof}
+    We follow the of \cite{Khaled} in proving their's Lemma 1 but under the boundaries of Assumption~\ref{ass:ass_2}.
 
     For $t \in \mathbb{N}$ we have $x^m_{t+1} = x^m_t - \gamma \mc{g}^m_t$ 
     and $\bar{x}_{t+1} = \bar{x}_t - \gamma \mc{\bar{g}}_t$
@@ -60,8 +129,8 @@
 
     \begin{align}
         \E \norm{x^m_{t+1} - \bar{x}_{t+1}}^2 
-        &= \norm{x^m_t - \bar{x}_t}^2 + \gamma^2 \E \norm{\mc{g}^m_t - \mc{g}_t}^2 - 2\gamma \E [\inner{x^m_t - \bar{x}_t}{\mc{g}^m_t - \mc{g}_t}] \\
-        &= \norm{x^m_t - \bar{x}_t}^2 + \gamma^2 \E \norm{\mc{g}^m_t - \mc{g}_t}^2 - 2\gamma \inner{x^m_t - \bar{x}_t}{g^m_t} + 2\gamma \inner {x^m_t - \bar{x}_t}{g_t}
+        &= \norm{x^m_t - \bar{x}_t}^2 + \gamma^2 \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2 - 2\gamma \E [\inner{x^m_t - \bar{x}_t}{\mc{g}^m_t - \mc{\bar{g}}_t}] \\
+        &= \norm{x^m_t - \bar{x}_t}^2 + \gamma^2 \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2 - 2\gamma \inner{x^m_t - \bar{x}_t}{g^m_t} + 2\gamma \inner {x^m_t - \bar{x}_t}{\bar{g}_t}
     \end{align}
 
     Averaging over $m$:
@@ -69,102 +138,94 @@
     \begin{align}
         \E [V_{t+1}] 
         &=
-        V_t + \frac{\gamma^2}{M} \summ{m=1}{M} \E \norm{\mc{g}^m_t - \mc{g}_t}^2 - \frac{2\gamma}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{g^m_t} + 2\gamma \inner {\bar{x}_t - \bar{x}_t}{g_t}  \\
+        V_t + \frac{\gamma^2}{M} \summ{m=1}{M} \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2 - \frac{2\gamma}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{g^m_t} + 2\gamma \inner {\bar{x}_t - \bar{x}_t}{\bar{g}_t}  \\
         &=
-        V_t + \frac{\gamma^2}{M} \summ{m=1}{M} \E \norm{\mc{g}^m_t - \mc{g}_t}^2 - \frac{2\gamma}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{g^m_t} \label{eq:1904_4}
+        V_t + \frac{\gamma^2}{M} \summ{m=1}{M} \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2 - \frac{2\gamma}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{g^m_t} \label{eq:1904_4}
     \end{align}
 
     By expanding square:
 
     \begin{align} 
-        \E \norm{\mc{g}^m_t - \mc{g}_t}^2
-        &= \E \norm{\mc{g}^m_t - g_t + g_t - \mc{g}_t}^2 \\
+        \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2
+        &= \E \norm{\mc{g}^m_t - \bar{g}_t + \bar{g}_t - \mc{\bar{g}}_t}^2 \\
         &= 
-        \E \norm{\mc{g}^m_t - g_t}^2 + \E \norm{\mc{g}_t - g_t}^2 + 2\E [\inner{\mc{g}^m_t - g_t}{g_t - \mc{g}_t}] \label{eq:1904_1}
+        \E \norm{\mc{g}^m_t - \bar{g}_t}^2 + \E \norm{\mc{\bar{g}}_t - \bar{g}_t}^2 + 2\E [\inner{\mc{g}^m_t - \bar{g}_t}{\bar{g}_t - \mc{\bar{g}}_t}] \label{eq:1904_1}
     \end{align}
 
     And again:
 
     \begin{align}
-        \E \norm{\mc{g}^m_t - g_t}^2 
-        &= \E \norm{\mc{g}^m_t - g^m_t + g^m_t - g_t}^2 \\
+        \E \norm{\mc{g}^m_t - \bar{g}_t}^2 
+        &= \E \norm{\mc{g}^m_t - g^m_t + g^m_t - \bar{g}_t}^2 \\
         &= \E \norm{\mc{g}^m_t - g^m_t}^2 
-        + \norm{g^m_t - g_t}^2
-        + 2\E[\inner{\mc{g}^m_t - g^m_t}{g^m_t - g_t}] \\
+        + \norm{g^m_t - \bar{g}_t}^2
+        + 2\E[\inner{\mc{g}^m_t - g^m_t}{g^m_t - \bar{g}_t}] \\
         &= \E \norm{\mc{g}^m_t - g^m_t}^2 
-        + \norm{g^m_t - g_t}^2
-        + 2 \inner{g^m_t - g^m_t}{g^m_t - g_t} \\
+        + \norm{g^m_t - \bar{g}_t}^2
+        + 2 \inner{g^m_t - g^m_t}{g^m_t - \bar{g}_t} \\
         &= \E \norm{\mc{g}^m_t - g^m_t}^2 
-        + \norm{g^m_t - g_t}^2 \label{eq:1904_2}
+        + \norm{g^m_t - \bar{g}_t}^2 \label{eq:1904_2}
     \end{align}
 
     Combining \eqref{eq:1904_1} and \eqref{eq:1904_2} we have:
 
     \begin{align}
-        \E \norm{\mc{g}^m_t - \mc{g}_t}^2
+        \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2
         &= \E \norm{\mc{g}^m_t - g^m_t}^2 
-        + \norm{g^m_t - g_t}^2 + \E \norm{\mc{g}_t - g_t}^2 + 2\E [\inner{\mc{g}^m_t - g_t}{g_t - \mc{g}_t}]
+        + \norm{g^m_t - \bar{g}_t}^2 + \E \norm{\mc{\bar{g}}_t - \bar{g}_t}^2 + 2\E [\inner{\mc{g}^m_t - \bar{g}_t}{\bar{g}_t - \mc{\bar{g}}_t}]
     \end{align}
 
     By averaging both sides over $m$:
 
     \begin{align}
-        \fsumm{m=1}{M} \E \norm{\mc{g}^m_t - \mc{g}_t}^2
+        \fsumm{m=1}{M} \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2
         &= \fsumm{m=1}{M} \E \norm{\mc{g}^m_t - g^m_t}^2 
-        + \fsumm{m=1}{M} \norm{g^m_t - g_t}^2 \\
-        &+ \E \norm{\mc{g}_t - g_t}^2 
-        + 2\E [\inner{\mc{g}_t - g_t}{g_t - \mc{g}_t}] \\
+        + \fsumm{m=1}{M} \norm{g^m_t - \bar{g}_t}^2 \\
+        &+ \E \norm{\mc{\bar{g}}_t - \bar{g}_t}^2 
+        + 2\E [\inner{\mc{\bar{g}}_t - \bar{g}_t}{\bar{g}_t - \mc{\bar{g}}_t}] \\
         &= \fsumm{m=1}{M} \E \norm{\mc{g}^m_t - g^m_t}^2 
-        + \fsumm{m=1}{M} \norm{g^m_t - g_t}^2 \\
-        &+ \E \norm{\mc{g}_t - g_t}^2 
-        - 2\E \norm{\mc{g}_t - g_t}^2 \\
+        + \fsumm{m=1}{M} \norm{g^m_t - \bar{g}_t}^2 \\
+        &+ \E \norm{\mc{\bar{g}}_t - \bar{g}_t}^2 
+        - 2\E \norm{\mc{\bar{g}}_t - \bar{g}_t}^2 \\
         &= \fsumm{m=1}{M} \E \norm{\mc{g}^m_t - g^m_t}^2 
-        + \fsumm{m=1}{M} \norm{g^m_t - g_t}^2
-        - \E \norm{\mc{g}_t - g_t}^2 \\
+        + \fsumm{m=1}{M} \norm{g^m_t - \bar{g}_t}^2
+        - \E \norm{\mc{\bar{g}}_t - \bar{g}_t}^2 \\
         &\leq \fsumm{m=1}{M} \E \norm{\mc{g}^m_t - g^m_t}^2 
-        + \fsumm{m=1}{M} \norm{g^m_t - g_t}^2 \label{eq:1904_3}
+        + \fsumm{m=1}{M} \norm{g^m_t - \bar{g}_t}^2 \label{eq:1904_3}
     \end{align}
 
     We can estimate second term here as follows:
     \begin{align}
-        \fsumm{m=1}{M} \norm{g^m_t - g_t}^2 
+        \fsumm{m=1}{M} \norm{g^m_t - \bar{g}_t}^2 
         &=
-        \fsumm{m=1}{M} \norm{g^m_t - \nabla F(\bar{x}_t) + \nabla F(\bar{x}_t) - g_t}^2 \\
+        \fsumm{m=1}{M} \norm{g^m_t - \nabla F(\bar{x}_t) + \nabla F(\bar{x}_t) - \bar{g}_t}^2 \\
         &=
-        \fsumm{m=1}{M} \left( \norm{g^m_t - \nabla F(\bar{x}_t)}^2 + \norm{\nabla F(\bar{x}_t) - g_t}^2 + 2 \inner{g^m_t - \nabla F(\bar{x}_t)}{\nabla F(\bar{x}_t) - g_t} \right) \\
+        \fsumm{m=1}{M} \left( \norm{g^m_t - \nabla F(\bar{x}_t)}^2 + \norm{\nabla F(\bar{x}_t) - \bar{g}_t}^2 + 2 \inner{g^m_t - \nabla F(\bar{x}_t)}{\nabla F(\bar{x}_t) - \bar{g}_t} \right) \\
         &= 
-        \fsumm{m=1}{M} \norm{g^m_t - \nabla F(\bar{x}_t)}^2 + \norm{\nabla F(\bar{x}_t) - g_t}^2 - 2 \norm{\nabla F(\bar{x}_t) - g_t}^2 \\
+        \fsumm{m=1}{M} \norm{g^m_t - \nabla F(\bar{x}_t)}^2 + \norm{\nabla F(\bar{x}_t) - \bar{g}_t}^2 - 2 \norm{\nabla F(\bar{x}_t) - \bar{g}_t}^2 \\
         &= 
-        \fsumm{m=1}{M} \norm{g^m_t - \nabla F(\bar{x}_t)}^2 - \norm{\nabla F(\bar{x}_t) - g_t}^2 \\
+        \fsumm{m=1}{M} \norm{g^m_t - \nabla F(\bar{x}_t)}^2 - \norm{\nabla F(\bar{x}_t) - \bar{g}_t}^2 \\
         &\leq 
         \fsumm{m=1}{M} \norm{g^m_t - \nabla F(\bar{x}_t)}^2
         =
         \fsumm{m=1}{M} \norm{\nabla F(x^m_t) - \nabla F(\bar{x}_t)}^2 \\
         &\overset{~\ref{cor:nesterov}}{\leq}
         \fsumm{m=1}{M} 2L (F(\bar{x}_t) - F(x^m_t) - \inner{\bar{x}_t - x^m_t}{\nabla F(x^m_t)}) \\
-        &=
+        &\overset{Jensen's \ ineq.}{\leq}
         \frac{2L}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)}
-        - 2L (\bar{F}_t-F(\bar{x}_t)) \label{eq:2004_1}
+        \label{eq:2004_1}
     \end{align}
 
     Substituting \eqref{eq:2004_1} into \eqref{eq:1904_3} and bounding variance:
 
     \begin{align}
-        \fsumm{m=1}{M} \E \norm{\mc{g}^m_t - \mc{g}_t} 
+        \fsumm{m=1}{M} \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t} 
         &\leq
         \fsumm{m=1}{M} \E \norm{\mc{g}^m_t - g^m_t}^2 
-        - 
-        2L (\bar{F}_t-F(\bar{x}_t))
         +
         \frac{2L}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)} \\
-        &\overset{~\ref{lem:rho}}{\leq}
-        \sigma^2 + 2 \rho L (\bar{F}_t - F_*) 
-        - 
-        2L (\bar{F}_t-F(\bar{x}_t))
-        +
-        \frac{2L}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)} \\
-        &=
-        \sigma^2 + 2 L (\rho - 1) (\bar{F}_t - F_*) 
+        &\overset{~\ref{lem:rho_2}}{\leq}
+        \sigma^2 + \rho L^2 V_t + \rho L^2 \norm{r_t}^2
         +
         \frac{2L}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)}
     \end{align}
@@ -174,35 +235,33 @@
     \begin{align}
         \E [V_{t+1}] 
         &=
-        V_t + \frac{\gamma^2}{M} \summ{m=1}{M} \E \norm{\mc{g}^m_t - \mc{g}_t}^2 - \frac{2\gamma}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)} \\
+        V_t + \frac{\gamma^2}{M} \summ{m=1}{M} \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2 - \frac{2\gamma}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)} \\
         &\leq 
         V_t 
-        +\gamma^2 \sigma^2 
-        +2 \gamma^2 L (\rho - 1) (\bar{F}_t - F_*) \\
+        + \gamma^2 \sigma^2 + \gamma^2 \rho L^2 V_t + \gamma^2 \rho L^2 \norm{r_t}^2
+        \\
         &+\frac{2 \gamma^2 L}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)}
         - \frac{2\gamma}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)} \\
         &=
         V_t 
-        +\gamma^2 \sigma^2 
-        +2 \gamma^2 L (\rho - 1) (\bar{F}_t - F_*)
+        + \gamma^2 \sigma^2 + \gamma^2 \rho L^2 V_t + \gamma^2 \rho L^2 \norm{r_t}^2
         - \frac{2\gamma}{M}(1 - \gamma L) \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)}
         \label{eq:1904_5}
     \end{align}
 
-    Now let us analyize last term. We know that $\gamma \leq \frac{1}{6L}$, therefore $1 - \gamma L \geq 0$. Thus, by strong convexity:
+    Now let us analyize last term. We know that $\gamma \leq \frac{1}{6L}$, therefore $1 - \gamma L \geq 0$. Thus, by strong convexity and Jensen's inequality:
 
     \begin{align}
-    &- \frac{2\gamma}{M}(1 - \gamma L) \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)} 
-    =
-    \frac{2\gamma}{M}(1 - \gamma L) \summ{m=1}{M} \inner{\bar{x}_t - x^m_t}{\nabla F(x^m_t)} \\
-    &\overset{~\ref{ass:ass_1}}{\leq}
-    \frac{2\gamma}{M}(1 - \gamma L) \summ{m=1}{M} \left(F(\bar{x}_t) - F(x^m_t) - \frac{\mu}{2} \norm{x^m_t - \bar{x}_t}^2 \right) \\
-    &=
-    \frac{2\gamma}{M}(1 - \gamma L) \summ{m=1}{M} \left( F(\bar{x}_t) - F(x^m_t) \right)
-    - \frac{\gamma}{M}(1 - \gamma L) \summ{m=1}{M} \mu \norm{x^m_t - \bar{x}_t}^2 \\
-    &=
-    - 2\gamma (1-\gamma L) (\bar{F}_t - F(\bar{x}_t)) - \gamma (1 - \gamma L) \mu V_t
-    \label{eq:1904_6}
+        &- \frac{2\gamma}{M}(1 - \gamma L) \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)} 
+        =
+        \frac{2\gamma}{M}(1 - \gamma L) \summ{m=1}{M} \inner{\bar{x}_t - x^m_t}{\nabla F(x^m_t)} \\
+        &\overset{~\ref{ass:ass_1}}{\leq}
+        \frac{2\gamma}{M}(1 - \gamma L) \summ{m=1}{M} \left(F(\bar{x}_t) - F(x^m_t) - \frac{\mu}{2} \norm{x^m_t - \bar{x}_t}^2 \right) \\
+        &\overset{Jensen's \ ineq.}{\leq}
+        - \frac{\gamma}{M}(1 - \gamma L) \summ{m=1}{M} \mu \norm{x^m_t - \bar{x}_t}^2 
+        =
+        - \gamma (1 - \gamma L) \mu V_t
+        \label{eq:1904_6}
     \end{align}
 
     Plugging \eqref{eq:1904_6} into \eqref{eq:1904_5} and again using that $\gamma \leq \frac{1}{6L}$:
@@ -211,55 +270,76 @@
         \E [V_{t+1}]
         &\leq
         V_t 
-        + \gamma^2 \sigma^2 
-        + 2 \gamma^2 L (\rho - 1) (\bar{F}_t - F_*)
-        - 2\gamma (1-\gamma L) (\bar{F}_t - F(\bar{x}_t)) - \gamma (1 - \gamma L) \mu V_t \\
+        + \gamma^2 \sigma^2 + \gamma^2 \rho L^2 V_t + \gamma^2 \rho L^2 \norm{r_t}^2
+        - \gamma (1 - \gamma L) \mu V_t \\
         &=
         (1 - \gamma (1 - \gamma L) \mu) V_t
-        + \gamma^2 \sigma^2 
-        + 2 \gamma^2 L (\rho - 1) (\bar{F}_t - F_*)
-        - 2\gamma (1-\gamma L) (\bar{F}_t - F(\bar{x}_t)) \\
+        + \gamma^2 \sigma^2 + \gamma^2 \rho L^2 V_t + \gamma^2 \rho L^2 \norm{r_t}^2 \\
         &\leq
         (1 - \frac {\gamma \mu}{6}) V_t
-        + \gamma^2 \sigma^2 
-        + 2 \gamma^2 L (\rho - 1) (\bar{F}_t - F_*)
-        - 2\gamma (1-\gamma L) (\bar{F}_t - F(\bar{x}_t))
+        + \gamma^2 \sigma^2 + \gamma^2 \rho L^2 V_t + \gamma^2 \rho L^2 \norm{r_t}^2 \\
+        &=
+        (1 - \frac {\gamma \mu}{6} + \gamma^2 \rho L^2) V_t
+        +  \gamma^2 \sigma^2 + \gamma^2 \rho L^2 \norm{r_t}^2
         \label{eq:1904_7} 
-    \end{align}
+    \end{align}     
+\end{proof}
 
-    Now let us do some algebraic manipulations with last two terms:
+\begin{sublemma} \label{sublem:vt=0}
+If $\rho = 0$ and $\gamma \leq \frac{1}{6L}$, then
 
     \begin{align}
-        2 \gamma^2 L (\rho - 1) & (\bar{F}_t - F_*)
-        - 2\gamma (1-\gamma L) (\bar{F}_t - F(\bar{x}_t)) \\
-        &=
-        2 \gamma^2 L \rho (\bar{F}_t - F_*)
-        - 2 \gamma^2 L (\bar{F}_t - F_*) \\
-        &- 2\gamma (\bar{F}_t - F(\bar{x}_t))
-        + 2\gamma^2 L (\bar{F}_t - F(\bar{x}_t)) \\
-        &=
-        2 \gamma^2 L \rho (\bar{F}_t - F_*)
-        + 2 \gamma^2 L F_* \\
-        &- 2\gamma (\bar{F}_t - F(\bar{x}_t))
-        - 2\gamma^2 L F(\bar{x}_t)
+        \E [V_t] 
+        \leq
+         (H-1) \gamma^2 \sigma^2
     \end{align}
 
-    Let us divide $t$ by $H$, suppose $t = kH + 1 + a; \ k, a \in \mathbb{N}; \ a < H$.
-    Recalling that $V_{kH + 1} = 0$, recursing \eqref{eq:1904_7} and considering $\E$ as a full expectation yields:
+\end{sublemma}
+
+\begin{proof}
+    This is Lemma 1 from \cite{Khaled}. 
+\end{proof}
+
+
+\begin{sublemma} \label{sublem:vt>0}
+If $\mu > 0$ and $\norm{r_{t+1}}^2 \geq (1 - \gamma \mu) \norm{r_t}^2$, then
+
+    \begin{align}
+        \E [V_t] 
+        \leq
+         (H-1) \gamma^2 \sigma^2 +
+        (H-1) \rho \gamma^2 L^2 \E \norm{r_t}^2
+    \end{align}
+
+\end{sublemma}
+
+\begin{proof}
+    Assume that $ \gamma \leq \frac{\mu}{12\rho L^2} $ which means that $-\frac{\gamma \mu }{6} + \gamma^2 \rho L^2 \leq -\frac{\gamma \mu}{12}$. By substituting this into the result of Sublemma~\ref{sublem:vt_base} we get:
+    \begin{align}
+        \E [V_{t+1}]
+        &\leq
+        (1 - \frac {\gamma \mu}{12}) V_t
+        + \gamma^2 \sigma^2 + \gamma^2 \rho L^2 \norm{r_t}^2
+        \label{eq:2204_1}
+    \end{align}
+    
+
+    Let us divide $t$ by $H$, suppose $t = kH + a; \ k, a \in \mathbb{N}; \ a < H$.
+    Recalling that $V_{kH} = 0$, recursing~\eqref{eq:2204_1} and considering $\E$ as a full expectation yields:
     
     \begin{align}
         \E [V_{t}]
         &\leq
-        (1 - \frac{\gamma \mu}{12})^a  \cdot V_{kH + 1} 
+        (1 - \frac{\gamma \mu}{12})^a  \cdot V_{kH} 
         +
-        \summ{j=kH + 1}{kH+a}
+        \summ{j=kH}{kH+a}
         (1 - \frac{\gamma \mu} {12})^{(t-j)}
         \cdot
         \left(
         \rho \gamma^2 L^2 \E \norm{r_j}^2 + \gamma^2 \sigma^2
         \right) \\
         &=
-        \summ{j=kH + 1}{kH+a}
+        \summ{j=kH}{kH+a}
         (1 - \frac{\gamma \mu} {12})^{(t-j)}
         \cdot 
         \left(
@@ -267,78 +347,12 @@
         \right) \\
         &\leq
         a \gamma^2 \sigma^2 +
-        \summ{j=kH + 1}{kH+a}
+        \rho \gamma^2 L^2 \summ{j=t-a}{t}
         (1 - \frac{\gamma \mu} {12})^{(t-j)}
-        \cdot \rho \gamma^2 L^2 \E \norm{r_j}^2 \\
-        &\overset{Magic}{\leq}
+        \cdot \E \norm{r_j}^2 \\
+        &\overset{Magic,\ \mu > 0}{\leq}
         a \gamma^2 \sigma^2 + a \rho \gamma^2 L^2 \E \norm{r_t}^2 
-        \leq 
+        \overset{a < H}{\leq}
         (H-1) \gamma^2 \sigma^2 + (H-1) \rho \gamma^2 L^2 \E \norm{r_t}^2 
-    \end{align}
-     
-\end{proof}
-
-
-
-\begin{lemma}\label{lem:very_main}
-    For $\gamma \leq \frac{1}{6L}$:
-    \begin{align}
-        \begin{split}
-            \E \norm{\bar{x}_{t+1}-x_*}^2
-            &\leq
-            (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 
-            + \frac{\gamma^2 \sigma^2}{M} + \frac{2 \gamma^2 \rho L^2}{M}  (H-1) \left(\gamma^2 \sigma^2 + 2 \rho \gamma^2 L^2 \norm{r_t}^2 \right)  \\
-            &+ \frac{2 \gamma^2 \rho L^2}{M} \E \norm{r_t}^2
-            - \frac{\gamma}{5} \E [F(\bar{x}_t) - F_*] 
-            + 10 \gamma^3 L_R (H-1) \left(\sigma^2 + 2 \rho L^2 \norm{r_t}^2 \right) \\
-            &\leq
-            \left(1 - \gamma \mu 
-            + \frac{2\gamma^4 \rho^2 H L^4}{M} 
-            + \frac{2\gamma^2 \rho L^2}{M}
-            + 20 \gamma^3 \rho L_R H L^2 \right) \E \norm{r_t}^2 \\
-            &+ \frac{\gamma^2 \sigma^2}{M} + \frac{2\gamma^4 \rho L^2 \sigma^2 H}{M}
-            + 10 \gamma^3 L_R H \sigma^2
-        \end{split}
-    \end{align}
-\end{lemma}
-\begin{proof}
-    Using the update equation \eqref{eq:upd_eq} we have
-    \begin{align}
-        \norm{\bar{x}_{t+1}-x_*}^2
-        &= \norm{\bar{x}_{t} - \gamma \bar {\mc{g_t}} - x_*}^2
-        = \norm{\bar{x}_{t} - \gamma \bar {\mc{g_t}} - x_* - \gamma \bar{g}_t + \gamma \bar{g}_t}^2 \\
-        &= \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2 
-        + \gamma^2 \norm{\bar {\mc{g_t}} - \bar{g}_t}^2
-        + 2 \gamma \inner{\bar{x}_t - x_* - \gamma \bar{g}_t}{\bar {\mc{g_t}} - \bar{g}_t}
-    \end{align}
-    
-    Taking expectation, 
-    \begin{align}
-        \E \norm{\bar{x}_{t+1}-x_*}^2
-        &= \E \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2
-        + \gamma^2 \E \norm{ \bar {\mc{g_t}} - \bar{g}_t}^2 \label{eq:eq81}
-    \end{align}
-    
-    
-    Taking expectiation of result of Lemma~\ref{lem:main}:
-    \begin{align}
-        \E \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2 
-        &\leq (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 
-        - \frac{\gamma}{5} \E [F(\bar{x}_t) - F_*] 
-        + 10 \gamma L_R \E [V_t] \label{eq:eq82}
-    \end{align}
-
-    Combining \eqref{eq:eq81} with Lemma~\ref{lem:var_red} and Lemma~\ref{lem:lemma_Vt}
-    \begin{align}
-         \E \norm{\bar{x}_{t+1}-x_*}^2
-        &\leq (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 
-        + \gamma^2 \E \norm{ \bar{\mc{g_t}} - \bar{g}_t}^2
-        - \frac{\gamma}{5} \E [F(\bar{x}_t) - F_*] 
-        + 10 \gamma L_R \E [V_t] \\
-        &\leq
-        (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 
-        + \frac{\gamma^2 \sigma^2}{M}
-        - \frac{\gamma}{5} \E [F(\bar{x}_t) - F_*] 
-        + 10 \gamma L_R (H-1) \gamma^2 \sigma^2
     \end{align}
 \end{proof}

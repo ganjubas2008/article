@@ -1,6 +1,12 @@
-\subsection{Contributions} \label{subsec:contributions}
+Our contributions are following:
 
-In this work, we mainly focus on the improvement in the last term of both convergence rates provided by Khaled et al. in prospect of statement~\ref{st:st_1}.
+\begin{itemize}
+    \item[a)] We demonstrate that improvements in convergence rates for Local SGD on quadratic-like functions are achievable not only in cases with a Lipschitz Hessian
+    
+    \item[b)] We are the first to demonstrate that such acceleration holds under assumption~\ref{ass:ass_2}
+\end{itemize}
+
+In this work, we mainly focus on the improvement in the last term (which represents dependency on communication frequency) of the convergence rates provided by \cite{Khaled} in prospect of statement~\ref{st:st_1}.
 
 %THEOREM 1
 \begin{theorem} \label{th:th_1}
@@ -17,7 +23,7 @@ In this work, we mainly focus on the improvement in the last term of both conver
 \begin{corollary} \label{}
     As it was previously shown in \cite{Woodworth}, an important special case is is achieved when epsilon is equal to zero. Than from the Theorem~\ref{th:th_1} it follows that:
     \begin{align}
-        \E[\norm{\bar{x}_T - x_*}^2]
+        \E \norm{\bar{x}_T - x_*}^2
         \leq
         (1 - \gamma \mu)^T \norm{x_0 - x_*}^2 
         + \frac{\gamma \sigma^2}{\mu M}
@@ -29,7 +35,7 @@ Thus, if $F$ is a quadratic function, the upper bound on the rate of convergence
 \begin{corollary} \label{}
     Considering $\gamma$ as a function of $t$ and choosing $\gamma_t$ as in Theorem 2 from \cite{Woodworth}, we obtain:
     \begin{align}
-        \E[F(\bar{x}_t) - F(x_*)]
+        \E[F(\bar{x}_t)] - F(x_*)
         \leq
         c \cdot \left(
         \text{exp} \left(-\frac{\mu T}{4 L}\right) +

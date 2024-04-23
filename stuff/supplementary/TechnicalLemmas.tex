@@ -2,52 +2,54 @@
 Before demonstrating the claimed facts, let's first establish some technical results.
 In this section we will follow the path of proving Lemma 3.1 from \cite{Stich}.
 
-\begin{lemma}
-    \begin{align}
-    \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2
-    &= \norm{\bar{x}_t - x_*}^2 
-    + \gamma^2 \norm{\bar{q}_t 
-    + \bar{r}_t - q_* - r_*}^2 
-    - 2 \gamma \inner{\bar{x}_t - x_*}{\bar{q}_t}
-    - 2 \gamma \inner{\bar{x}_t - x_*}{\bar{r}_t} \label{eq:St_0}
-\end{align}
+\begin{lemma} \label{lem:lem_1}
+    \begin{align*}
+        \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2
+        &= \norm{\bar{x}_t - x_*}^2 
+        + \gamma^2 \norm{\bar{q}_t 
+        + \bar{r}_t - q_* - r_*}^2 
+        - 2 \gamma \inner{\bar{x}_t - x_*}{\bar{q}_t}
+        - 2 \gamma \inner{\bar{x}_t - x_*}{\bar{r}_t} 
+    \end{align*}
 \begin{proof}
-    \begin{align}
-    \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2
-    &= 
-    \norm{\bar{x}_t - x_*}^2 
-    + \gamma^2 \norm{\bar{g}_t}^2 
-    - 2 \gamma \inner{\bar{x}_t - x_*}{\bar{g}_t} \\
-    &= 
-    \norm{\bar{x}_t - x_*}^2 
-    + \gamma^2 \norm{\bar{g}_t}^2 
-    - \frac{2\gamma}{M} \summ {m=1}{M}{ \inner{\bar{x}_t - x_*}{\nabla F(x^m_t)} } \\
-    &= 
-    \norm{\bar{x}_t - x_*}^2 
-    + \gamma^2 \norm{\fsumm {m=1}{M}{\nabla F(x^m_t)}}^2 
-    - \frac{2\gamma}{M} \summ {m=1}{M}{ \inner{\bar{x}_t - x_*}{\nabla F(x^m_t)} } \\
-    &= 
-    \norm{\bar{x}_t - x_*}^2 
-    + \gamma^2 \norm{\fsumm {m=1}{M}{\nabla F(x^m_t)} - \nabla F(x_*)}^2 
-    - \frac{2\gamma}{M} \summ {m=1}{M}{ \inner{\bar{x}_t - x_*}{\nabla F(x^m_t)} } \\
-    &= 
-    \norm{\bar{x}_t - x_*}^2 
-    + \gamma^2 \norm{\fsumm {m=1}{M}{\nabla Q(x^m_t) + \nabla R(x^m_t) - \nabla Q(x_*) - \nabla R(x_*)}}^2  \\
-    &- \frac{2\gamma}{M} \summ {m=1}{M}{ \inner{\bar{x}_t - x_*}{\nabla Q(x^m_t)} }
-    - \frac{2\gamma}{M} \summ {m=1}{M}{ \inner{\bar{x}_t - x_*}{\nabla R(x^m_t)} }  \\
-    &= 
-    \norm{\bar{x}_t - x_*}^2 
-    + \gamma^2 \norm{\bar{q}_t 
-    + \bar{r}_t - q_* - r_*}^2  
-    - \frac{2\gamma}{M} \summ {m=1}{M}{ \inner{\bar{x}_t - x_*}{q^m_t} }
-    - \frac{2\gamma}{M} \summ {m=1}{M} { \inner{\bar{x}_t - x_*}{r^m_t} } \\
-    &= 
-    \norm{\bar{x}_t - x_*}^2 
-    + \gamma^2 \norm{\bar{q}_t 
-    + \bar{r}_t - q_* - r_*}^2 
-    - 2 \gamma \inner{\bar{x}_t - x_*}{\bar{q}_t}
-    - 2 \gamma \inner{\bar{x}_t - x_*}{\bar{r}_t} \label{eq:St_0}
-\end{align}
+    \begin{align*}
+        \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2
+        &= 
+        \norm{\bar{x}_t - x_*}^2 
+        + \gamma^2 \norm{\bar{g}_t}^2 
+        - 2 \gamma \inner{\bar{x}_t - x_*}{\bar{g}_t} \\
+        &= 
+        \norm{\bar{x}_t - x_*}^2 
+        + \gamma^2 \norm{\bar{g}_t}^2 
+        - \frac{2\gamma}{M} \summ {m=1}{M}{ \inner{\bar{x}_t - x_*}{\nabla F(x^m_t)} } \\
+        &= 
+        \norm{\bar{x}_t - x_*}^2 
+        + \gamma^2 \norm{\fsumm {m=1}{M}{\nabla F(x^m_t)}}^2 
+        - \frac{2\gamma}{M} \summ {m=1}{M}{ \inner{\bar{x}_t - x_*}{\nabla F(x^m_t)} } \\
+        &= 
+            \notag
+        \norm{\bar{x}_t - x_*}^2 
+        + \gamma^2 \norm{\fsumm {m=1}{M}{\nabla F(x^m_t)} - \nabla F(x_*)}^2 
+        - \frac{2\gamma}{M} \summ {m=1}{M}{ \inner{\bar{x}_t - x_*}{\nabla F(x^m_t)} } \\
+        &= 
+            \notag
+        \norm{\bar{x}_t - x_*}^2 
+        + \gamma^2 \norm{\fsumm {m=1}{M}{\nabla Q(x^m_t) + \nabla R(x^m_t) - \nabla Q(x_*) - \nabla R(x_*)}}^2  \\
+        &- \frac{2\gamma}{M} \summ {m=1}{M}{ \inner{\bar{x}_t - x_*}{\nabla Q(x^m_t)} }
+        - \frac{2\gamma}{M} \summ {m=1}{M}{ \inner{\bar{x}_t - x_*}{\nabla R(x^m_t)} }  \\
+        &= 
+        \norm{\bar{x}_t - x_*}^2 
+        + \gamma^2 \norm{\bar{q}_t 
+        + \bar{r}_t - q_* - r_*}^2  
+        - \frac{2\gamma}{M} \summ {m=1}{M}{ \inner{\bar{x}_t - x_*}{q^m_t} }
+        - \frac{2\gamma}{M} \summ {m=1}{M} { \inner{\bar{x}_t - x_*}{r^m_t} } \\
+        &= 
+        \norm{\bar{x}_t - x_*}^2 
+        + \gamma^2 \norm{\bar{q}_t 
+        + \bar{r}_t - q_* - r_*}^2 
+        - 2 \gamma \inner{\bar{x}_t - x_*}{\bar{q}_t}
+        - 2 \gamma \inner{\bar{x}_t - x_*}{\bar{r}_t} 
+    \end{align*}
 \end{proof}
 \end{lemma}
 
@@ -185,7 +187,7 @@ Where $A$ and $B$ are functions of $\zeta \in \mathbb{R}$ such that:
 \[B(\zeta) = \gamma L_R(1+\frac{1}{\zeta}) + \frac{1}{2p}\]
 
 \end{lemma}
-\begin{proof} Substituting the results of Lemmas~\ref{lem:g_t},~\ref{lem:inner_1} and~\ref{lem:inner_2} into \eqref{eq:St_0} and doing some algebraic manipulations:
+\begin{proof} Substituting the results of Lemmas~\ref{lem:g_t},~\ref{lem:inner_1} and~\ref{lem:inner_2} into Lemma~\ref{lem:lem_1} and doing some algebraic manipulations:
     \begin{align}
         \begin{split}
             &\norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2 \leq \norm{\bar{x}_t - x_*}^2 \\
@@ -242,7 +244,7 @@ By substituting the expressions in square brackets with $A$ and $B$, we obtain t
         &\zeta_{1} := \frac{-(L_Q - L_R - \frac{1}{2\gamma p}) + \sqrt{(L_Q - L_R - \frac{1}{2\gamma p})^2 + 4 L_Q L_R}}{2L_Q} > 0
     \end{align}
     
-    $\zeta_{1}$ is a solution to a quadratic equation, so,
+    $\zeta_{1}$ is a solution to a quadratic equation. Thus,
     \begin{align}
         \gamma L_R (1+\frac{1}{\zeta_1}) + \frac{1}{2p} = \gamma L_Q (1+\zeta_1) \label{eq:St_5}
     \end{align}
@@ -253,7 +255,7 @@ By substituting the expressions in square brackets with $A$ and $B$, we obtain t
     For $\zeta_1$ from previous lemma: $A(\zeta_1) - 1 \leq -\frac{1}{12} \leq 0$
 \end{sublemma}
 \begin{proof}
-    $\gamma \leq \frac{1}{6 L}$, meaning that $L \leq \frac{1}{6 \gamma }$:
+    Let us take $\gamma \leq \frac{1}{6 L}$, meaning that $L \leq \frac{1}{6 \gamma }$:
     \begin{align}
         A(\zeta_1)& - 1 = \gamma L_Q(1+\zeta_1) - 1 \\
         &= \gamma L_Q 
@@ -347,3 +349,53 @@ Further, let's denote $A(\zeta_1)$ as $A_1$ and $B(\zeta_1)$ as $B_1$
     Thus completing the proof.
 \end{proof}
 
+
+Now we will present the final result of this subsection:
+
+
+\begin{lemma} \label{lem:very_main}
+    For $\gamma \leq \frac{1}{6L}$:
+    \begin{align}
+        \E \norm{\bar{x}_{t+1}-x_*}^2
+        &\leq (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 
+        + \gamma^2 \E \norm{ \bar{\mc{g_t}} - \bar{g}_t}^2
+        - \frac{\gamma}{6} \E [F(\bar{x}_t) - F_*] 
+        + 2 \gamma L_R \E [V_t]
+    \end{align}
+\end{lemma}
+\begin{proof}
+    Using the update equation \eqref{eq:upd_eq} we have
+    \begin{align}
+        \norm{\bar{x}_{t+1}-x_*}^2
+        &= \norm{\bar{x}_{t} - \gamma \bar {\mc{g_t}} - x_*}^2
+        = \norm{\bar{x}_{t} - \gamma \bar {\mc{g_t}} - x_* - \gamma \bar{g}_t + \gamma \bar{g}_t}^2 \\
+        &= \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2 
+        + \gamma^2 \norm{\bar {\mc{g_t}} - \bar{g}_t}^2
+        + 2 \gamma \inner{\bar{x}_t - x_* - \gamma \bar{g}_t}{\bar {\mc{g_t}} - \bar{g}_t}
+    \end{align}
+    
+    Taking expectation, 
+    \begin{align}
+        \E \norm{\bar{x}_{t+1}-x_*}^2
+        &= \E \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2
+        + \gamma^2 \E \norm{ \bar {\mc{g_t}} - \bar{g}_t}^2 \label{eq:2204_3}
+    \end{align}
+    
+    
+    Taking expectiation of result of Lemma~\ref{lem:main}:
+    \begin{align}
+        \E \norm{\bar{x}_t - x_* - \gamma \bar{g}_t}^2 
+        &\leq (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 
+        - \frac{\gamma}{6} \E [F(\bar{x}_t) - F_*] 
+        + 2 \gamma L_R \E [V_t] \label{eq:2204_2}
+    \end{align}
+
+    Combination of \eqref{eq:2204_3} and \eqref{eq:2204_2} yields the claim of the Lemma:
+    \begin{align}
+         \E \norm{\bar{x}_{t+1}-x_*}^2
+        &\leq (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 
+        + \gamma^2 \E \norm{ \bar{\mc{g_t}} - \bar{g}_t}^2
+        - \frac{\gamma}{6} \E [F(\bar{x}_t) - F_*] 
+        + 2 \gamma L_R \E [V_t]
+    \end{align}
+\end{proof}

@@ -1,4 +1,5 @@
-$ $\par
+
+Before we talk about our contributions, let's quickly explain what Federated Learning is and what problem it's solving.
 
 \subsection{General words}
 
@@ -6,20 +7,29 @@ In the ever-evolving landscape of machine learning, we've witnessed the emergenc
 
 \vspace{10pt}
 
-However, the challenge of communication frequency remains unresolved in Federated Learning. Insufficient communication may lead to divergence, while overly frequent communication poses its own set of issues. Imagine tackling an optimization problem in a space with a dimensions around $10^9$, which occurs often in practice \citep{shahid2021communication}. Each time we compute a gradient locally, it ends up being gigabytes in size, which makes sending it over for transmission quite a challenge. Thus, striking the delicate balance in communication frequency becomes the key to success in Federated Learning.
+However, the challenge of communication frequency remains unresolved in Federated Learning. Insufficient communication may lead to divergence, while overly frequent communication poses its own set of issues. Imagine tackling an optimization problem in a space with a dimension around $10^9$, which occurs often in practice \citep{shahid2021communication}. Each time we compute a gradient locally, it ends up being gigabytes in size, which makes sending it over for transmission quite a challenge. Thus, striking the delicate balance in communication frequency becomes the key to success in Federated Learning.
 
 \vspace{10pt}
 
-The scientific community has developed sophisticated federated learning frameworks that leverage the idea of rare intermittent communications. Among the most notable are SCAFFOLD \citep{Scaffold} and FedAC \citep{FedAC}. These algorithms are widely utilized in practice, particularly when data distribution varies among computational devices \citep{Hospitals}. However, the simplest and most classical algorithm, named Local SGD (also known as FedAvg or Parallel SGD, \cite{Mangasarian}), has been proven to be as efficient as these intricate algorithms when data distribution is similar \citep{KEK LOL}. 
-The core concept of Local SGD can be described as follows: each participating device conducts few steps of SGD locally and then devices communicate with each other averaging their models' weights.
+To address this challenge, scientific community has developed sophisticated federated learning frameworks capable of performing well even with infrequent communication. Among the most notable are SCAFFOLD \citep{Scaffold} and FedAC \citep{FedAC}. These algorithms are widely utilized in practice since they save a lot of time on communication. They also show efficiency when data distribution varies among computational devices \citep{Hospitals}. Unfortunately, due to their complexity, implementation and convergence analysis of such algorithms can be challenging.
 
 \vspace{10pt}
 
-In environments where the distribution of data remains consistent, such as when computations are distributed within a computational cluster or among processor cores within a single device, Local SGD finds extensive application. This classical algorithm remains actively utilized in modern machine learning applications such as Natural Language Processing (NLP) and computer vision. Recent studies \citep{LocalSGD_LLM, LocalSGD_CV} have underscored its efficiency and effectiveness in identical distribution situations. With its straightforward approach and strong performance, Local SGD continues to play pivotal role in diverse domains of federated learning.
+On the other hand, the simplest and most classical algorithm that also utilizes the idea of rare communications, named Local SGD (also known as FedAvg or Parallel SGD), has been proven to be as efficient as these intricate algorithms when data distribution is similar \citep{KEK LOL}. 
+The core concept of Local SGD can be described as follows: each participating device conducts few steps of SGD locally and then devices communicate with each other averaging their models' weights (see~\ref{subsec:problem_formulation} for more details)
 
 \vspace{10pt}
 
-\subsection{Problem formulation}
+Even though idea is not new, and it was introduced more that two decades ago by \cite{Mangasarian}, Local SGD is now again in the center of attention.
+It's pluses made the algorithm attractive for both practitioners, due to the communication complexity combined with the ease of implementation, and theoreticians, due to the simplicity of it's analysis. 
+
+\vspace{10pt}
+
+In environments where the distribution of data remains similar, such as when computations are distributed within a computational cluster or among processor cores within a single device, Local SGD finds extensive application. This classical algorithm remains actively utilized in modern machine learning applications such as Natural Language Processing (NLP) and computer vision. Recent studies \citep{LocalSGD_LLM, LocalSGD_CV} have underscored its efficiency and effectiveness in identical distribution situations. With its straightforward approach and strong performance, Local SGD continues to play pivotal role in training large models. In this paper, we concentrate on analyzing convergence rates for Local SGD.
+
+\vspace{10pt}
+
+\subsection{Problem formulation} \label{subsec:problem_formulation}
 
 Now, let us formally introduce the task we are solving. Consider a scenario where \( M \) devices \( 1, 2, \ldots, m \), collectively solving optimization problem, that is finding:
 
@@ -33,11 +43,18 @@ Here, \( F(x) \) is defined as the expected value over a distribution \( \mathca
 
 Our focus lies on a first-order stochastic oracle, where we have access to the stochastic estimate of \( \nabla F \) on each node. We denote this estimate as \( \nabla F(x, z) \), with \( z \) representing a sample from \( \mathcal{D} \).
 
+\vspace{10pt}
+
 This formulation captures a wide range of practical problems, such as Empirical Risk Minimization \citep{Vapnik}. In our case \( F \) denotes the empirical risk (i.e., the average of losses across some data samples) and \( z \) denotes the indices of data samples.
 
 \vspace{10pt}
 
-As we have already mentioned, one of the primary frameworks for addressing such problem is Local SGD. This method involves executing few consecutive SGD steps locally on each device, averaging the results, and repeating this process for $R$ rounds, resulting in a total of $T$ iterations on each device.
+Here it is important to underline the method by which we measure communication complexity for Federated Learning methods. Unlike classical optimization, where complexity was considered as the number of times the oracle is called, i.e., computing local gradients $\nabla F(x^m, z^m)$, we also care about communication complexity. Generally, we define it as the quantity of information we transmit, or the number of communications in our case.
+So, in this work, we will emphasize reducing the number of communication rounds $R$ or increasing the number of SGD steps between communications, denoted as $H$, while keeping the total number of SGD steps $T$ unchanged.
+
+\vspace{10pt}
+
+Now we are ready to get familiar with the formal definition of Local SGD.
 
 \input{algorithms/LocalSgd}
 
@@ -45,19 +62,19 @@ As we have already mentioned, one of the primary frameworks for addressing such 
 
 \subsection{Related work}
 
-In both scenarios of identical and heterogeneous settings, extensive research has been conducted across various contexts. \citep{Li} analyzed the non-convex setting under bounded gradient norms. As expected, the further we deviate from the identical and strongly convex settings, the poorer the results become. However, in this work, we will focus solely on convex and strongly convex cases.
+In both scenarios of identical and heterogeneous settings, extensive research has been conducted across various contexts. \cite{Li} and \cite{haddapour} analyzed the non-convex setting under bounded gradient norms. As expected, the further we deviate from the identical and strongly convex settings, the poorer the results become. However, in this work, we will focus solely on convex and strongly convex cases.
 
 \vspace{10pt}
 
-\cite{Woodworth} demonstrated that in the scenario where the objective function is quadratic, the convergence rate of Local SGD remains independent of communication frequency. This observation aligns with the lower bounds established for Local SGD, indicating that for purely quadratic functions, further enhancement of convergence rate is unattainable.
+The theoretical aspect of the convex case has been extensively studied. Among the most remarkable works, we can mention \cite{Stich}, who conducted analysis under the assumption of bounded gradient norms. Subsequently, a considerable amount of research was conducted on integrating Local SGD with various Federated Learning techniques, such as momentum, quantization, and restarting \citep{fedpaq, spider, restarts}.
 
 \vspace{10pt}
 
-The most promising outcomes in the identical convex case, where the function is not quadratic, were previously achieved under the assumption of Lipschitz Hessian \citep{FedAC}. This observation resonates with the findings of \cite{FedAC} and \cite{Spiridonoff}, who concluded that closer proximity to a purely quadratic case correlates with improved convergence estimates.
+Notably, \cite{Khaled} and \cite{Woodworth} provided the best known estimate without any restrictions of the Hessian. In our study, we extend these findings, particularly in cases where the objective function $F$ exhibits proximity to a quadratic form. Importantly, our approach does not assume Hessian Lipschitzness as other works \cite{FedAC}, thus representing a generalization of previous research efforts.
 
 \vspace{10pt}
 
-Notably, \cite{Khaled} and \cite{Woodworth} provided the best known estimate without any restrictions of the Hessian. In our study, we extend these findings, particularly in cases where the objective function $F$ exhibits proximity to a quadratic form. Importantly, our approach does not assume Hessian Lipschitzness, thus representing a generalization of previous research efforts.
+It's worth noting that the majority of existing research, with the exception of \cite{Spiridonoff}, operates under the assumption that the variance of stochastic gradients is uniformly bounded. This assumption posits the existence of a constant $\sigma$ such that $\norm{\nabla F(x, z) - \nabla F(x)}^2 \leq \sigma^2$. However, this assumption is often unrealistic in real-world scenarios. For example, it is violated in the case of Coordinate SGD \citep{coordinateSGD}, where only a subset of partial derivatives is computed instead of the full gradient. Therefore, one of our objectives was to analyze Local SGD for quadratic-like functions under assumption~\ref{ass:ass_2}, which seems to be very general and hold almost always.
 
 \input{tables/Table}
 
@@ -67,3 +84,16 @@ As evident from this table, our work achieves a clear improvement in the estimat
 % literature and compare existing results. In subsection~\ref{subsec:settings} we define the main problem and state our assumptions.
 % We present our theoretical findings in subsection~\ref{subsec:contributions}  followed by numerical experiments in section~\ref{sec:experiments} and
 % proofs in section~\ref{sec:proofs}.
+
+
+\subsection{Specifics of the quadratic case}
+
+\cite{earlyquadratics} were the first to notice that in the scenario where the objective function is quadratic, the convergence rate of Local SGD remains independent of communication frequency. Later, \cite{Woodworth} provided a proof of this. This important observation aligns with the lower bounds established for Local SGD, indicating that for purely quadratic functions, further enhancement of the convergence rate is unattainable.
+
+\vspace{10pt}
+
+Subsequent works focused on the generalization of this. Unsurprisingly, the most promising outcomes in the identical convex case, where the function is not quadratic, were previously achieved under the assumption of a Lipschitz Hessian \citep{FedAC, Spiridonoff}, because this assumption in some way demonstrates the "quadraticity" of a function.
+
+\vspace{10pt}
+
+However, a gap still exists between the general case, as analyzed by \cite{Khaled}, and the challenging assumption of a Lipschitz Hessian. This assumption appears to be invalid for neural networks with ReLU activation functions. Therefore, our primary objective is to offer an analysis that bridges this gap. To achieve this, we introduce the concept of "\textbf{quadraticity}", i.e. $\varepsilon$ (\ref{st:st_1}), which provides insight into the proximity of a function to a quadratic form without imposing additional assumptions and conduct our analysis with respect to the "quadraticity" of the objective function.

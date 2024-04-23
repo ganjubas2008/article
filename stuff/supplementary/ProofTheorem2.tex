@@ -1,46 +1,44 @@
-As in the previous subsection, we continue to follow Khaled's proof, but with additional assumptions.
-
 \begin{proof}
     Consider $\gamma \leq \frac{1}{6L}$ and $\mu = 0$.
-    In this case, from Lemma~\ref{lem:very_main} we obtain:
+    In this case, from Lemmas~\ref{lem:very_main} and~\ref{lem:lemma_Vt} we obtain:
     \begin{align}
         \begin{split}
             \E \norm{\bar{x}_{t+1}-x_*}^2
             \leq
             \E \norm{\bar{x}_t - x_*}^2 
             + \frac{\gamma^2 \sigma^2}{M}
-            - \frac{\gamma}{5} \E [F(\bar{x}_t) - F_*] 
-            + 10 \gamma L_R (H-1) \gamma^2 \sigma^2
+            - \frac{\gamma}{6} \E [F(\bar{x}_t) - F_*] 
+            + 2 \gamma L_R (H-1) \gamma^2 \sigma^2
         \end{split}
     \end{align}
-    Let's denote $d_t = \bar{x}_t - x_*$, then rearranging the above equation we have:
+    Let's denote $r_t = \bar{x}_t - x_*$, then rearranging the above equation we have:
     \begin{align}
         \begin{split}
-            \frac{\gamma}{5} \E [F(\bar{x}_t) - F_*]
+            \frac{\gamma}{6} \E [F(\bar{x}_t) - F_*]
             \leq
-            \E \norm{d_t}^2 
-            - \E \norm{d_{t+1}}^2
+            \E \norm{r_t}^2 
+            - \E \norm{r_{t+1}}^2
             + \frac{\gamma^2 \sigma^2}{M}
-            + 10 L_R (H-1) \gamma^3 \sigma^2
+            + 2 L_R (H-1) \gamma^3 \sigma^2
         \end{split}
     \end{align}
     Averging the above equation over $t$,
     \begin{align}
         \begin{split}
-            \frac{\gamma}{5 T} \sum_{t=0}^{T-1} \E [F(\bar{x}_t) - F_*]
+            \frac{\gamma}{6 T} \sum_{t=0}^{T-1} \E [F(\bar{x}_t) - F_*]
             &\leq 
             \frac{1}{T} \sum_{t=0}^{T-1} 
-            (\E \norm{d_t}^2 
-            - \E \norm{d_{t+1}}^2)
+            (\E \norm{r_t}^2 
+            - \E \norm{r_{t+1}}^2)
             + \frac{\gamma^2 \sigma^2}{M}
-            + 10 L_R (H-1) \gamma^3 \sigma^2 \\
-            &= \frac{\norm{d_0}^2 - \E\norm{d_T}^2}{T}
+            + 2 L_R (H-1) \gamma^3 \sigma^2 \\
+            &= \frac{\norm{r_0}^2 - \E\norm{r_T}^2}{T}
             + \frac{\gamma^2 \sigma^2}{M}
-            + 10 L_R (H-1) \gamma^3 \sigma^2  \\
+            + 2 L_R (H-1) \gamma^3 \sigma^2  \\
             &\leq
-            \frac{\norm{d_0}^2}{T}
+            \frac{\norm{r_0}^2}{T}
             + \frac{\gamma^2 \sigma^2}{M}
-            + 10 L_R (H-1) \gamma^3 \sigma^2 \label{eq:avergingovert}
+            + 2 L_R (H-1) \gamma^3 \sigma^2 \label{eq:avergingovert}
         \end{split}
     \end{align}
     For $\hat{x}_t = \frac{1}{T} \sum_{t=0}^{T-1} \bar{x}_t$, by Jensen's inequality:
@@ -52,19 +50,19 @@ As in the previous subsection, we continue to follow Khaled's proof, but with ad
     Plugging \eqref{eq:jens} into \eqref{eq:avergingovert},
     \begin{align}
         \begin{split}
-            \frac{\gamma}{5} \E [F(\hat{x}_t) - F_*]
-            &\leq \frac{\norm{d_0}^2}{T}
+            \frac{\gamma}{6} \E [F(\hat{x}_t) - F_*]
+            &\leq \frac{\norm{r_0}^2}{T}
             + \frac{\gamma^2 \sigma^2}{M}
-            + 10 L_R (H-1) \gamma^3 \sigma^2
+            + 2 L_R (H-1) \gamma^3 \sigma^2
         \end{split}
     \end{align}
-    Dividing both sides by $\frac{\gamma}{5}$, we prove the theorem:
+    Dividing both sides by $\frac{\gamma}{6}$, we prove the theorem:
     \begin{align}
         \begin{split}
             \E [F(\hat{x}_t) - F_*]
-            &\leq \frac{5}{ \gamma T} \norm{d_t}^2
-            + \frac{5 \gamma \sigma^2}{M}
-            + 50 L_R (H-1) \gamma^2 \sigma^2
+            &\leq \frac{6}{ \gamma T} \norm{r_t}^2
+            + \frac{6 \gamma \sigma^2}{M}
+            + 12 L_R (H-1) \gamma^2 \sigma^2
         \end{split}
     \end{align}
 \end{proof}
