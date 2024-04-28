@@ -1,0 +1,72 @@
+In this work we mainly focus on improving the convergence estimates provided by \cite{Woodworth}, \cite{Khaled} and \cite{Spiridonoff} in prospect of Statement\ref{st:st_1} and Assumption~\ref{ass:ass_2}, i.e. strong-growth condition.
+
+%THEOREM 1
+\begin{theorem} \label{th:th_1}
+    Under assumptions~\ref{ass:ass_1} and~\ref{ass:ass_2} with $\rho = 0$, decomposing $F$ as announced in~\ref{st:st_1} and considering $\mu > 0$ and $\gamma \leq \frac{1}{6 L}$ gives:
+    \begin{align}
+        \E \norm{\bar{x}_T - x_*}^2
+        \leq
+        (1 - \gamma \mu)^T \norm{x_0 - x_*}^2 
+        + \frac{\gamma \sigma^2}{\mu M} 
+        + \frac{2 \varepsilon \gamma^2 \sigma^2 L (H-1)}{\mu}
+    \end{align}
+\end{theorem}
+
+\begin{corollary} \label{}
+    As it was previously shown in \cite{Woodworth}, an important special case is is achieved when epsilon is equal to zero. Than from the Theorem~\ref{th:th_1} it follows that:
+    \begin{align}
+        \E \norm{\bar{x}_T - x_*}^2
+        \leq
+        (1 - \gamma \mu)^T \norm{x_0 - x_*}^2 
+        + \frac{\gamma \sigma^2}{\mu M}
+    \end{align}
+\end{corollary}
+
+Thus, if $F$ is a quadratic function, the upper bound on the rate of convergence is independent of the communication frequency.
+
+\begin{corollary} \label{}
+    By defining stepsize $\gamma = ...$ \cite{...}, we obtain тут хочется сделать как у Мищенко но у него непонятно:
+    \begin{align}
+        \E[F(\bar{x}_t)] - F(x_*)
+        \leq
+        ...
+    \end{align}
+\end{corollary}
+
+
+
+%THEOREM 2
+\begin{theorem} \label{th:th_2}
+    Under Assumptions~\ref{ass:ass_1}, ~\ref{ass:ass_2} and ~\ref{ass:ass_3}, decomposing $F$ as announced in~\ref{st:st_1} and considering $\mu = 0$ and $\gamma \leq \frac{1}{6 L}$ we have:
+    \begin{align}
+        \E [F(\hat{x}_T)] - F(x_*)
+        \leq \frac{6}{ \gamma T} \norm{x_0 - x_*}^2
+        + \frac{6 \gamma \sigma^2}{M}
+        + 12 \varepsilon L (H-1) \gamma^2 \sigma^2
+    \end{align}
+    Where $\hat{x}_T = \frac{1}{T} \summ{t=1}{T} \bar{x}_t$
+\end{theorem}
+
+\begin{corollary} \label{}
+    Choosing $\gamma = \frac{\sqrt{M}}{6 L\sqrt{T}}$ and assuming $M \leq T$ as in \cite{Khaled} yields:
+    \begin{align}
+        \E[F(\hat{x}_T)] - F(x_*)
+        \leq
+          \frac{36 \norm{x_0-x_*}^2}{\sqrt{MT}} + \frac{\sigma^2}{L\sqrt{MT}} + \frac{
+          \varepsilon \sigma^2 M}{6 L R}
+    \end{align}
+\end{corollary}
+
+%THEOREM 3
+\begin{theorem}[Convergence rate on quadratic-like objectives under strong-growth condition] \label{th:mu>0,rho>0}
+    
+    Suppose Assumptions \ref{ass:ass_1}, \ref{ass:ass_2} and \ref{ass:ass_3} hold for $\lambda > 0$ and arbitrary $\rho$. Then, for some sequence of stepsizes $\gamma_t$ Local SGD yields:
+
+    \begin{align}
+        \E \norm{r_T}^2 = \tilde{\O} \left(1 + \frac{\kappa^2 + \rho^2\kappa^4 + \rho ^2\varepsilon^2 \kappa^6 }{T^2} \norm{r_0}^2
+         + \frac{\sigma^2}{\lambda^2 MT} \right)
+         + \frac{\rho \kappa^2 \sigma^2}{\lambda^2 M T^2} 
+        + \frac{\varepsilon \kappa \sigma^2}{\lambda^2 TR}
+    \end{align}
+
+\end{theorem}

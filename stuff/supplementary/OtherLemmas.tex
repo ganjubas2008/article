@@ -60,10 +60,10 @@
         \frac{\sigma^2}{M} + \frac{\rho L^2 }{M} V_t  + \frac{\rho L^2 }{M} \norm{r_t}^2
     \end{align}
 \end{lemma}
-\begin{proof} In the first equality we use that $g^m_t$ on each device are independent, and in the second inequality we use Lemma~\ref{lem:rho}.
+\begin{proof} In the second equality we use that $g^m_t$ on each device are independent, and in the first inequality we use Lemma~\ref{lem:rho_2}.
     \begin{align}
         \E \norm{\bar{\mc{g}}_t - \bar{g}_t}^2 
-        &\leq 
+        &=
         \E \norm{\fsumm{m=1}{M}{\mc{g}^m_t - g^m_t}}^2 \\
         &=
         \frac{1}{M^2} \summ{m=1}{M} \E \norm{\mc{g}^m_t - g^m_t}^2 \\
@@ -77,60 +77,99 @@
 \begin{lemma} \label{lem:lemma_Vt}
 
 $\,$ 
+    \begin{itemize}
+        \item[(a)] Suppose $\rho = 0$ and $\gamma_{t} \leq \frac{1}{6L}$, then for any $\lambda$:
 
-    If $\rho = 0$ and $\gamma \leq \frac{1}{6L}$, then:
     \begin{align}
-        \E [V_t] 
-        \leq 
-        (H - 1) \gamma^2 \sigma^2
+        \E [V_t] \leq
+        \begin{cases}
+            (H-1) \sigma^2 \gamma^2 & \text{for constant stepsizes } \gamma_t \equiv \gamma \\
+            \\
+            \frac{2 (M - 1) (H - 1) \sigma^2 \gamma_{t-1}^2}{M} & \text{if } \gamma_t = \frac{2}{\lambda(\xi + t + 1)} \text{ where } \xi \geq 0
+            \\
+            \\
+            \frac{2 (M-1) (H-1) \sigma^2 \gamma_{t-K+1 \land 0}}{M} & \text{for any non-increasing } \gamma_t
+        \end{cases}
     \end{align}
 
-    Under following assumptions:
-    
-    \begin{itemize}
 
-    \item $\mu > 0$
-    \item $\gamma \leq \frac{\mu}{12\rho L^2}$
-    \item For all $t$ it is true that $\norm{r_{t+1}}^2 \geq (1-\frac{\gamma \mu}{12}) \norm{r_t}^2$
-
-    \end{itemize}
-    
-    it is true that
+    \item[(b)] Suppose $\lambda > 0$ and $\gamma_{t} \leq \min \{ \frac{\lambda}{12\rho L^2}, \frac{1}{12L} \}$. Then for any $\rho$:
     \begin{align}
         \E [V_t]
         \leq
-        (H-1) \gamma^2 \sigma^2 +
-        (H-1) \rho \gamma^2 L^2 \E \norm{r_t}^2
+        a \gamma_{t}^2 \sigma^2 +
+        \rho \gamma_{t}^2 L^2 \summ{j=t-a}{t}
+        (1 - \frac{\gamma_{j} \lambda} {12})^{(t-j)}
+        \cdot \E \norm{r_j}^2
     \end{align}
+    Where $a = t \mod H$.
+    \end{itemize}
+
+    
 
 \end{lemma}
 
 \begin{proof}
-    This result is a compilation of results obtained in Sublemmas~\ref{sublem:vt=0} and~\ref{sublem:vt>0}
+    We defer the proofs from point (a) to \cite{Khaled} and \cite{Woodworth} (Sublemmas \ref{sublem:vt=0_khaled}, \ref{sublem:vt=0_woodworth}) and present the proof of point (b) in Sublemma \ref{sublem:vt>0}
 \end{proof}
+
+\begin{sublemma} \label{sublem:vt=0_khaled}
+If $\rho = 0$ and $\gamma_{t} \equiv \gamma \leq \frac{1}{6L}$, then for any $\lambda$
+
+    \begin{align}
+        \E [V_t] 
+        \leq
+         (H-1) \gamma^2 \sigma^2
+    \end{align}
+
+\end{sublemma}
+
+\begin{proof}
+    This is Lemma 1 from \cite{Khaled}. 
+\end{proof}
+
+\begin{sublemma} \label{sublem:vt=0_woodworth}
+If $\rho = 0$ then 
+
+\begin{align}
+    \E [V_t] \leq
+        \begin{cases}
+            \frac{2 (M - 1) (H - 1) \sigma^2 \gamma_{t-1}^2}{M} & \text{if } \gamma_t = \frac{2}{\lambda(\xi + t + 1)} \text{ where } \xi \geq 0
+            \\
+            \\
+            \frac{2 (M-1) (H-1) \sigma^2 \gamma_{t-K+1 \land 0}}{M} & \text{for any non-increasing } \gamma_t
+        \end{cases}
+\end{align}
+
+\end{sublemma}
+
+\begin{proof}
+    This is Lemma 5 from \cite{Woodworth}.
+\end{proof}
+
 
 \begin{sublemma} \label{sublem:vt_base}
     \begin{align}
         \E [V_{t+1}]
         &\leq
-        (1 - \frac {\gamma \mu}{6} + \gamma^2 \rho L^2) V_t
-        +  \gamma^2 \sigma^2 + \gamma^2 \rho L^2 \norm{r_t}^2
+        (1 - \frac {\gamma_{t} \lambda}{6} + \gamma_{t}^2 \rho L^2) V_t
+        +  \gamma_{t}^2 \sigma^2 + \gamma_{t}^2 \rho L^2 \norm{r_t}^2
     \end{align}
 \end{sublemma}
 
 \begin{proof}
     We follow the of \cite{Khaled} in proving their's Lemma 1 but under the boundaries of Assumption~\ref{ass:ass_2}.
 
-    For $t \in \mathbb{N}$ we have $x^m_{t+1} = x^m_t - \gamma \mc{g}^m_t$ 
-    and $\bar{x}_{t+1} = \bar{x}_t - \gamma \mc{\bar{g}}_t$
+    For $t \in \mathbb{N}$ we have $x^m_{t+1} = x^m_t - \gamma_{t} \mc{g}^m_t$ 
+    and $\bar{x}_{t+1} = \bar{x}_t - \gamma_{t} \mc{\bar{g}}_t$
     if $t + 1 \mod H \neq 0$. 
     
     Hence for such $t$ and for conditioned expectation it is true that:
 
     \begin{align}
         \E \norm{x^m_{t+1} - \bar{x}_{t+1}}^2 
-        &= \norm{x^m_t - \bar{x}_t}^2 + \gamma^2 \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2 - 2\gamma \E [\inner{x^m_t - \bar{x}_t}{\mc{g}^m_t - \mc{\bar{g}}_t}] \\
-        &= \norm{x^m_t - \bar{x}_t}^2 + \gamma^2 \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2 - 2\gamma \inner{x^m_t - \bar{x}_t}{g^m_t} + 2\gamma \inner {x^m_t - \bar{x}_t}{\bar{g}_t}
+        &= \norm{x^m_t - \bar{x}_t}^2 + \gamma_{t}^2 \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2 - 2\gamma_{t} \E [\inner{x^m_t - \bar{x}_t}{\mc{g}^m_t - \mc{\bar{g}}_t}] \\
+        &= \norm{x^m_t - \bar{x}_t}^2 + \gamma_{t}^2 \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2 - 2\gamma_{t} \inner{x^m_t - \bar{x}_t}{g^m_t} + 2\gamma_{t} \inner {x^m_t - \bar{x}_t}{\bar{g}_t}
     \end{align}
 
     Averaging over $m$:
@@ -138,9 +177,9 @@ $\,$
     \begin{align}
         \E [V_{t+1}] 
         &=
-        V_t + \frac{\gamma^2}{M} \summ{m=1}{M} \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2 - \frac{2\gamma}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{g^m_t} + 2\gamma \inner {\bar{x}_t - \bar{x}_t}{\bar{g}_t}  \\
+        V_t + \frac{\gamma_{t}^2}{M} \summ{m=1}{M} \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2 - \frac{2\gamma_{t}}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{g^m_t} + 2\gamma_{t} \inner {\bar{x}_t - \bar{x}_t}{\bar{g}_t}  \\
         &=
-        V_t + \frac{\gamma^2}{M} \summ{m=1}{M} \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2 - \frac{2\gamma}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{g^m_t} \label{eq:1904_4}
+        V_t + \frac{\gamma_{t}^2}{M} \summ{m=1}{M} \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2 - \frac{2\gamma_{t}}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{g^m_t} \label{eq:1904_4}
     \end{align}
 
     By expanding square:
@@ -235,91 +274,76 @@ $\,$
     \begin{align}
         \E [V_{t+1}] 
         &=
-        V_t + \frac{\gamma^2}{M} \summ{m=1}{M} \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2 - \frac{2\gamma}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)} \\
+        V_t + \frac{\gamma_{t}^2}{M} \summ{m=1}{M} \E \norm{\mc{g}^m_t - \mc{\bar{g}}_t}^2 - \frac{2\gamma_{t}}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)} \\
         &\leq 
         V_t 
-        + \gamma^2 \sigma^2 + \gamma^2 \rho L^2 V_t + \gamma^2 \rho L^2 \norm{r_t}^2
+        + \gamma_{t}^2 \sigma^2 + \gamma_{t}^2 \rho L^2 V_t + \gamma_{t}^2 \rho L^2 \norm{r_t}^2
         \\
-        &+\frac{2 \gamma^2 L}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)}
-        - \frac{2\gamma}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)} \\
+        &+\frac{2 \gamma_{t}^2 L}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)}
+        - \frac{2\gamma_{t}}{M} \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)} \\
         &=
         V_t 
-        + \gamma^2 \sigma^2 + \gamma^2 \rho L^2 V_t + \gamma^2 \rho L^2 \norm{r_t}^2
-        - \frac{2\gamma}{M}(1 - \gamma L) \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)}
+        + \gamma_{t}^2 \sigma^2 + \gamma_{t}^2 \rho L^2 V_t + \gamma_{t}^2 \rho L^2 \norm{r_t}^2
+        - \frac{2\gamma_{t}}{M}(1 - \gamma_{t} L) \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)}
         \label{eq:1904_5}
     \end{align}
 
-    Now let us analyize last term. We know that $\gamma \leq \frac{1}{6L}$, therefore $1 - \gamma L \geq 0$. Thus, by strong convexity and Jensen's inequality:
+    Now let us analyize last term. We know that $\gamma_{t} \leq \frac{1}{6L}$, therefore $1 - \gamma_{t} L \geq 0$. Thus, by strong convexity and Jensen's inequality:
 
     \begin{align}
-        &- \frac{2\gamma}{M}(1 - \gamma L) \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)} 
+        &- \frac{2\gamma_{t}}{M}(1 - \gamma_{t} L) \summ{m=1}{M} \inner{x^m_t - \bar{x}_t}{\nabla F(x^m_t)} 
         =
-        \frac{2\gamma}{M}(1 - \gamma L) \summ{m=1}{M} \inner{\bar{x}_t - x^m_t}{\nabla F(x^m_t)} \\
+        \frac{2\gamma_{t}}{M}(1 - \gamma_{t} L) \summ{m=1}{M} \inner{\bar{x}_t - x^m_t}{\nabla F(x^m_t)} \\
         &\overset{~\ref{ass:ass_1}}{\leq}
-        \frac{2\gamma}{M}(1 - \gamma L) \summ{m=1}{M} \left(F(\bar{x}_t) - F(x^m_t) - \frac{\mu}{2} \norm{x^m_t - \bar{x}_t}^2 \right) \\
+        \frac{2\gamma_{t}}{M}(1 - \gamma_{t} L) \summ{m=1}{M} \left(F(\bar{x}_t) - F(x^m_t) - \frac{\lambda}{2} \norm{x^m_t - \bar{x}_t}^2 \right) \\
         &\overset{Jensen's \ ineq.}{\leq}
-        - \frac{\gamma}{M}(1 - \gamma L) \summ{m=1}{M} \mu \norm{x^m_t - \bar{x}_t}^2 
+        - \frac{\gamma_{t}}{M}(1 - \gamma_{t} L) \summ{m=1}{M} \lambda \norm{x^m_t - \bar{x}_t}^2 
         =
-        - \gamma (1 - \gamma L) \mu V_t
+        - \gamma_{t} (1 - \gamma_{t} L) \lambda V_t
         \label{eq:1904_6}
     \end{align}
 
-    Plugging \eqref{eq:1904_6} into \eqref{eq:1904_5} and again using that $\gamma \leq \frac{1}{6L}$:
+    Plugging \eqref{eq:1904_6} into \eqref{eq:1904_5} and again using that $\gamma_{t} \leq \frac{1}{6L}$:
 
     \begin{align}
         \E [V_{t+1}]
         &\leq
         V_t 
-        + \gamma^2 \sigma^2 + \gamma^2 \rho L^2 V_t + \gamma^2 \rho L^2 \norm{r_t}^2
-        - \gamma (1 - \gamma L) \mu V_t \\
+        + \gamma_{t}^2 \sigma^2 + \gamma_{t}^2 \rho L^2 V_t + \gamma_{t}^2 \rho L^2 \norm{r_t}^2
+        - \gamma_{t} (1 - \gamma_{t} L) \lambda V_t \\
         &=
-        (1 - \gamma (1 - \gamma L) \mu) V_t
-        + \gamma^2 \sigma^2 + \gamma^2 \rho L^2 V_t + \gamma^2 \rho L^2 \norm{r_t}^2 \\
+        (1 - \gamma_{t} (1 - \gamma_{t} L) \lambda) V_t
+        + \gamma_{t}^2 \sigma^2 + \gamma_{t}^2 \rho L^2 V_t + \gamma_{t}^2 \rho L^2 \norm{r_t}^2 \\
         &\leq
-        (1 - \frac {\gamma \mu}{6}) V_t
-        + \gamma^2 \sigma^2 + \gamma^2 \rho L^2 V_t + \gamma^2 \rho L^2 \norm{r_t}^2 \\
+        (1 - \frac {\gamma_{t} \lambda}{6}) V_t
+        + \gamma_{t}^2 \sigma^2 + \gamma_{t}^2 \rho L^2 V_t + \gamma_{t}^2 \rho L^2 \norm{r_t}^2 \\
         &=
-        (1 - \frac {\gamma \mu}{6} + \gamma^2 \rho L^2) V_t
-        +  \gamma^2 \sigma^2 + \gamma^2 \rho L^2 \norm{r_t}^2
+        (1 - \frac {\gamma_{t} \lambda}{6} + \gamma_{t}^2 \rho L^2) V_t
+        +  \gamma_{t}^2 \sigma^2 + \gamma_{t}^2 \rho L^2 \norm{r_t}^2
         \label{eq:1904_7} 
     \end{align}     
 \end{proof}
 
-\begin{sublemma} \label{sublem:vt=0}
-If $\rho = 0$ and $\gamma \leq \frac{1}{6L}$, then
-
-    \begin{align}
-        \E [V_t] 
-        \leq
-         (H-1) \gamma^2 \sigma^2
-    \end{align}
-
-\end{sublemma}
-
-\begin{proof}
-    This is Lemma 1 from \cite{Khaled}. 
-\end{proof}
-
 
 \begin{sublemma} \label{sublem:vt>0}
-If $\mu > 0$ and $\norm{r_{t+1}}^2 \geq (1 - \gamma \mu) \norm{r_t}^2$, then
+Under the assumptions of Lemma~\ref{lem:lemma_Vt},
 
     \begin{align}
         \E [V_t] 
         \leq
-         (H-1) \gamma^2 \sigma^2 +
-        (H-1) \rho \gamma^2 L^2 \E \norm{r_t}^2
+         (H-1) \gamma_{t}^2 \sigma^2 +
+        (H-1) \rho \gamma_{t}^2 L^2 \E \norm{r_t}^2
     \end{align}
 
 \end{sublemma}
 
 \begin{proof}
-    Assume that $ \gamma \leq \frac{\mu}{12\rho L^2} $ which means that $-\frac{\gamma \mu }{6} + \gamma^2 \rho L^2 \leq -\frac{\gamma \mu}{12}$. By substituting this into the result of Sublemma~\ref{sublem:vt_base} we get:
+    We have $ \gamma_{t} \leq \frac{\lambda}{12\rho L^2} $, which means that $-\frac{\gamma_{t} \lambda }{6} + \gamma_{t}^2 \rho L^2 \leq -\frac{\gamma_{t} \lambda}{12}$. By substituting this into the result of Sublemma~\ref{sublem:vt_base} we get:
     \begin{align}
         \E [V_{t+1}]
         &\leq
-        (1 - \frac {\gamma \mu}{12}) V_t
-        + \gamma^2 \sigma^2 + \gamma^2 \rho L^2 \norm{r_t}^2
+        (1 - \frac {\gamma_{t} \lambda}{12}) V_t
+        + \gamma_{t}^2 \sigma^2 + \gamma_{t}^2 \rho L^2 \norm{r_t}^2
         \label{eq:2204_1}
     \end{align}
     
@@ -330,29 +354,25 @@ If $\mu > 0$ and $\norm{r_{t+1}}^2 \geq (1 - \gamma \mu) \norm{r_t}^2$, then
     \begin{align}
         \E [V_{t}]
         &\leq
-        (1 - \frac{\gamma \mu}{12})^a  \cdot V_{kH} 
+        (1 - \frac{\gamma_{t} \lambda}{12})^a  \cdot V_{kH} 
         +
         \summ{j=kH}{kH+a}
-        (1 - \frac{\gamma \mu} {12})^{(t-j)}
+        (1 - \frac{\gamma_{t} \lambda} {12})^{(t-j)}
         \cdot
         \left(
-        \rho \gamma^2 L^2 \E \norm{r_j}^2 + \gamma^2 \sigma^2
+        \rho \gamma_{t}^2 L^2 \E \norm{r_j}^2 + \gamma_{t}^2 \sigma^2
         \right) \\
         &=
         \summ{j=kH}{kH+a}
-        (1 - \frac{\gamma \mu} {12})^{(t-j)}
+        (1 - \frac{\gamma_{j} \lambda} {12})^{(t-j)}
         \cdot 
         \left(
-        \rho \gamma^2 L^2 \E \norm{r_j}^2 + \gamma^2 \sigma^2
+        \rho \gamma_{j}^2 L^2 \E \norm{r_j}^2 + \gamma_{t}^2 \sigma^2
         \right) \\
         &\leq
-        a \gamma^2 \sigma^2 +
-        \rho \gamma^2 L^2 \summ{j=t-a}{t}
-        (1 - \frac{\gamma \mu} {12})^{(t-j)}
-        \cdot \E \norm{r_j}^2 \\
-        &\overset{Magic,\ \mu > 0}{\leq}
-        a \gamma^2 \sigma^2 + a \rho \gamma^2 L^2 \E \norm{r_t}^2 
-        \overset{a < H}{\leq}
-        (H-1) \gamma^2 \sigma^2 + (H-1) \rho \gamma^2 L^2 \E \norm{r_t}^2 
+        a \gamma_{t}^2 \sigma^2 +
+        \rho \gamma_{t}^2 L^2 \summ{j=t-a}{t}
+        (1 - \frac{\gamma_{j} \lambda} {12})^{(t-j)}
+        \cdot \E \norm{r_j}^2 
     \end{align}
 \end{proof}

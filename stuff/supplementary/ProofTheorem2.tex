@@ -1,5 +1,5 @@
 \begin{proof}
-    Consider $\gamma \leq \frac{1}{6L}$ and $\mu = 0$.
+    Consider constant stepsizes $\gamma_t \equiv \gamma \leq \frac{1}{6L}$, $\mu = 0$ and $\rho = 0$.
     In this case, from Lemmas~\ref{lem:very_main} and~\ref{lem:lemma_Vt} we obtain:
     \begin{align}
         \begin{split}
@@ -11,7 +11,7 @@
             + 2 \gamma L_R (H-1) \gamma^2 \sigma^2
         \end{split}
     \end{align}
-    Let's denote $r_t = \bar{x}_t - x_*$, then rearranging the above equation we have:
+    Let's denote $r_t = \bar{x}_t - x_*$, then rearranging the above equation yields:
     \begin{align}
         \begin{split}
             \frac{\gamma}{6} \E [F(\bar{x}_t) - F_*]
@@ -41,16 +41,16 @@
             + 2 L_R (H-1) \gamma^3 \sigma^2 \label{eq:avergingovert}
         \end{split}
     \end{align}
-    For $\hat{x}_t = \frac{1}{T} \sum_{t=0}^{T-1} \bar{x}_t$, by Jensen's inequality:
+    For $\hat{x}_T = \frac{1}{T} \sum_{t=0}^{T-1} \bar{x}_t$, by Jensen's inequality:
     \begin{align}
         \begin{split}
-            \E [F(\hat{x}_t) - F_*] \leq \frac{1}{T} \sum_{t=0}^{T-1} \E [F(\bar{x}_t) - F_*] \label{eq:jens}
+            \E [F(\hat{x}_T) - F_*] \leq \frac{1}{T} \sum_{t=0}^{T-1} \E [F(\bar{x}_t) - F_*] \label{eq:jens}
         \end{split}
     \end{align}
     Plugging \eqref{eq:jens} into \eqref{eq:avergingovert},
     \begin{align}
         \begin{split}
-            \frac{\gamma}{6} \E [F(\hat{x}_t) - F_*]
+            \frac{\gamma}{6} \E [F(\hat{x}_T) - F_*]
             &\leq \frac{\norm{r_0}^2}{T}
             + \frac{\gamma^2 \sigma^2}{M}
             + 2 L_R (H-1) \gamma^3 \sigma^2
@@ -59,8 +59,8 @@
     Dividing both sides by $\frac{\gamma}{6}$, we prove the theorem:
     \begin{align}
         \begin{split}
-            \E [F(\hat{x}_t) - F_*]
-            &\leq \frac{6}{ \gamma T} \norm{r_t}^2
+            \E [F(\hat{x}_T) - F_*]
+            &\leq \frac{6}{ \gamma T} \norm{r_0}^2
             + \frac{6 \gamma \sigma^2}{M}
             + 12 L_R (H-1) \gamma^2 \sigma^2
         \end{split}

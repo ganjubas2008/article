@@ -1,0 +1,42 @@
+\begin{lemma} \label{lem:decay_eps}
+    Suppose $F$ has Lipschitz Hessian, meaning $F$ is twice differentiable and exists such constant $\frac{C}{6}$, that for any $x, y \in \mathbb{R}$:
+    \begin{align}
+        \norm{\nabla^2 F(x) - \nabla^2 F(y)} \leq \frac{C}{6} \norm{x-y}
+    \end{align}
+
+    Also let us define $L^{\mathbb{S}}$-smoothness as regular $L$-smoothness on some subset $\mathbb{S} \subset \mathbb{R}^d$.
+
+    Then, for some distributed algorithm $\mathcal{A}$ involving $M$ devices with corresponding local weights $x^m_t$ it holds that $L^\mathbb{S}_R \leq C \cdot \text{max} \{ \norm{x^m_t - x_*} \}$ for all sets $\mathbb{S} \in \mathbb{R}^d$ containing all of $x^m_t$.
+
+    \textbf{Note.} Even though ПЛОХО НЕПОНЯТНО, что со стох градиентами, $\mathbb{S}$ должно зависеть от $t$, .... Стоит ли добавлять док-во для lowerbound функции
+
+    \begin{proof}
+    \cite{Nesterov} in his Lemma 1.2.4 proved that if $F$ satisfies Lipschitz Hessian assumption, then for all $x, y \in \mathbb{R}$
+
+    \begin{align}
+         \norm{F(y) - F(x) - \inner{\nabla F(x)}{y-x} - \frac{1}{2}\inner{\nabla^2 F(x)(y-x)}{y-x}}^2 \leq \frac{C}{6} \norm {x-y}^3 \label{eq:2404_4}
+    \end{align}    
+    
+    Statement~\ref{st:st_1} holds for any decompositions of $F$ as the sum of $Q$ and $R$. Thus, we are free to choose $Q$ and $R$ in way that minimizes $\frac{L_R}{L}$ on each step. Thus, let us naturally define 
+
+    \begin{align}
+        &Q(x) := F(x_*) + \inner{\nabla F(x_*)}{x-x_*} + \frac{1}{2} \inner{\nabla^2 F(x_*)(x-x_*)}{x-x_*} \\
+        &R(x) := F(x) - Q(x)
+    \end{align}
+
+    So, $F(x) = Q(x) + R(x)$ and $Q$ is obviously quadratic.
+
+    Substituting this into \eqref{eq:2404_4} we gain:
+    \begin{align}
+        \norm{F(x) - Q(x)} = \norm{R(x)}^2 \leq \frac{C}{6} \norm{x-y}^3
+    \end{align}
+
+
+    \begin{align}
+        \norm{R(x) - R(x_*)}^2 \leq \frac{C}{3} \norm{x-x_*}^3
+    \end{align}
+
+   
+
+    \end{proof}
+\end{lemma}

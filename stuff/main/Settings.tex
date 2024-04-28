@@ -31,21 +31,22 @@ Under assumption~\ref{ass:ass_1}
 \end{assumption}
 
 %F=Q+R decomposition
-\begin{statement} \label{st:st_1}
+\begin{statement}[\varepsilon - decomposition] \label{st:st_1}
     Objective function can be decomposed as $F = Q + R$, where $Q$ is a quadratic function that is $\mu_Q$-convex and $L_Q$-smooth, and $R$ is $\mu_R$-convex and $L_R$-smooth. Than we denote parameter
     \(\varepsilon := \frac{L_R}{L}\)
     which gives us an idea of how far $F$ is from a quadratic function.
 \end{statement}
 
-Note that such decomposition always takes place beacuse we can take $Q = 0$ and $R = F$.
+Note that such decomposition always takes place because we can take $Q = 0$ and $R = F$.
 
+We will denote the sum of $\mu_Q$ and $\mu_R$ as $\lambda$, and $\frac{L}{\lambda}$ as $\kappa$. 
 
 \begin{corollary} \label{cor:linearity}
-    In the prospect of statement~\ref{st:st_1}, following takes place: $\,$
+    In the prospect of Statement~\ref{st:st_1}, following takes place: $\,$
     \begin{enumerate}
     \item[a)] $\nabla Q$ is a linear function
     \item[b)] \(\varepsilon \leq 1\)
 
-    \item[c)] \(\mu_Q + \mu_R \leq \mu\)
+    \item[c)] \(\lambda \leq \mu\)
 \end{enumerate}
 \end{corollary}

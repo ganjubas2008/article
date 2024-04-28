@@ -8,7 +8,7 @@
 \footnotesize
 
 \begin{threeparttable}
-\begin{tabular}{|p{2cm}|p{1.7cm}|p{1.7cm}|p{1.5cm}|p{1.5cm}|p{6cm}|}
+\begin{tabular}{|p{2cm}|p{1.7cm}|p{1.7cm}|p{1.5cm}|p{1.5cm}|p{8cm}|}
 \hline
 \textbf{Reference} &
 \textbf{Not-Lipschitz Hessian} &
@@ -100,14 +100,14 @@ $\mu > 0$ & $\tilde{\O} \left(
 \multirow{2}{=}{\greencheck} &
 \multirow{2}{=}{Uniform} 
 & 
-$\mu=0$ & ${\O} \left(
+$\lambda=0$ & ${\O} \left(
           \frac{D^2}{\sqrt{MT}} + \frac{\sigma^2}{L\sqrt{MT}} + \frac{
           \bm{\varepsilon} \sigma^2 M}{LR} \right)$ 
           \tnote{{\color{blue}($\varepsilon$-note)}}
           \\
           
 & & & & 
-$\mu > 0$ & $\tilde{\O} \left( 
+$\lambda > 0$ & $\tilde{\O} \left( 
   			\frac{L D^2 }{T^2} + 
   			\frac{L \sigma^2}{\mu^2 M T} + \frac{
      \bm{\varepsilon} L^2 \sigma^2}{\mu^3 T R} \right)$ 
@@ -122,9 +122,12 @@ $\mu > 0$ & $\tilde{\O} \left(
 \multirow{2}{=}{\greencheck} &
 \multirow{2}{=}{Uniform with strong growth} 
 & 
-$\mu=0$ & - \\
+$\lambda=0$ & - \\
 & & & & 
-$\mu > 0$ & - \\
+$\lambda > 0$ & $\tilde{\O} \left(\frac{1 + \kappa^2 + \rho^2\kappa^4 + \rho ^2\varepsilon^2 \kappa^6 }{T^2} \norm{r_0}^2
+         + \frac{\sigma^2}{\lambda^2 MT} 
+         + \frac{\rho \kappa^2 \sigma^2}{\lambda^2 M T^2} 
+        + \frac{\varepsilon \kappa \sigma^2}{\lambda^2 TR}  \right) $ \\
 %_____________________%
 
 \hline
@@ -148,7 +151,7 @@ $\mu > 0$ & - \\
     \item \tnote{{\color{blue}(improve-lr)}} Шаг следует выбрать поинтереснее
     
     \item \tnote{{\color{blue}($\varepsilon$-note)}} $\varepsilon$ shows how far function is from quadratic; 
-    for all functions $\varepsilon \leq 1$ and for quadratic functions $\varepsilon = 0$. For more details see st.~\ref{st:st_1} and section~\ref{sec:discussion}
+    for all functions $\varepsilon \leq 1$ and for quadratic functions $\varepsilon = 0$. For more details see st.~\ref{st:st_1} and for discussion see~\ref{sec:discussion}
 \end{itemize}
 \end{tablenotes}
 \end{threeparttable}

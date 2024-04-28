@@ -1,0 +1,235 @@
+\begin{proof}
+    Consider the assumptions of Theormen~\ref{th:mu>0,rho>0} hold. Then let us substitute results of the previous subsection (i.e. Lemmas~\ref{lem:var_red}
+and~\ref{lem:lemma_Vt}) into the Lemma~\ref{lem:very_main} and conduct algebraic manipulations.
+\begin{align}
+    \E \norm{r_{t+1}}^2
+    &\leq (1 - \gamma_{t} \lambda) \E \norm{r_t}^2 
+    + \gamma_{t}^2 \E \norm{ \bar{\mc{g_t}} - \bar{g}_t}^2
+    + 2 \gamma_{t} L_R \E [V_t] \\
+    &\overset{\ref{lem:var_red}, \ref{lem:lemma_Vt}}{\leq}
+    (1 - \gamma_{t} \lambda) \E \norm{r_t}^2 
+    + \gamma_{t}^2 \left(  \frac{\sigma^2}{M} + \frac{\rho L^2 }{M} V_t + \frac{\rho L^2 }{M} \norm{r_t}^2  \right) + 2 \gamma_{t} L_R \E [V_t] \\
+    &= (1 - \gamma_{t} \lambda + \frac{\rho L^2}{M}) \E \norm{r_t}^2 + \E [V_t] \left( \frac{\gamma_{t}^2 \rho L^2}{M} + 2 \gamma_{t} L_R \right) + \frac{\gamma_{t}^2 \sigma^2}{M} \\
+    &\overset{a = t\ \text{mod}\ H}{\leq}
+    (1 - \frac{\gamma_{t} \lambda}{2}) \E \norm{r_t}^2 \\
+    &+ \left( a \gamma_{t}^2 \sigma^2 +
+        \rho \gamma_{t}^2 L^2 \summ{j=t-a}{t}
+        (1 - \frac{\gamma_{j} \lambda} {12})^{(t-j)}
+        \cdot \E \norm{r_j}^2 \right) 
+        \cdot 
+        \left( \frac{\gamma_{t}^2 \rho L^2}{M} + 2 \gamma_{t} L_R \right) 
+        + \frac{\gamma_{t}^2 \sigma^2}{M} \\
+    &= (1 - \frac{\gamma_{t} \lambda}{2}) \E \norm{r_t}^2 + \left( \frac{\gamma_{t}^2 \rho L^2}{M} + 2 \gamma_{t} L_R \right) 
+    \cdot 
+    \rho \gamma_{t}^2 L^2 \summ{j=t-a}{t}
+    (1 - \frac{\gamma_{j} \lambda} {12})^{(t-j)}
+    \cdot \E \norm{r_j}^2 \\
+    &+ \left( \frac{\gamma_{t}^2 \rho L^2}{M} + 2 \gamma_{t} L_R \right) \cdot a \gamma_{t}^2 \sigma^2 + \frac{\gamma_{t}^2 \sigma^2}{M} \label{eq:2604_1}
+\end{align}
+
+Let us make contractions:
+    \begin{align}
+        &A_{t} := \left( \frac{\gamma_{t}^2 \rho L^2}{M} + 2 \gamma_{t} L_R \right) \cdot a \gamma_{t}^2 \sigma^2 + \frac{\gamma_{t}^2 \sigma^2}{M} \\
+        &c_{t} := \left( \frac{\gamma_{t}^2 \rho L^2}{M} + 2 \gamma_{t} L_R \right) 
+        \cdot 
+        \rho \gamma_{t}^2 L^2 \\
+        &\alpha_{t} := (1 - \frac{\gamma_{t} \lambda}{2}) \\
+        &\beta_{t} := (1 - \frac{\gamma_{t} \lambda}{12}) \label{eq:beta_def} \\
+        &d_t := \E \norm{r_t}^2
+    \end{align}
+
+Then \eqref{eq:2604_1} can be rewritten as
+
+\begin{align}
+    d_{t+1} \leq \alpha_t d_t + c_t \summ{j=t-a}{t} \beta_{t}^{(t-j)} d_j  + A_t \label{eq:2604_2}
+\end{align}
+
+To analyze this relation we will utilized technique similar to one used in \cite{Spiridonoff}.
+
+Consider $\gamma_t = \frac{10}{\lambda(\xi + t)}$ for $\xi = \max \{ 60\kappa, 120\rho\kappa^2,  \sqrt{2}\cdot 100 \rho \kappa, 400 \rho \varepsilon \kappa^3\} + 1$.
+
+It is easy to see that such choice of $\xi$ makes $\gamma_t$ satisfy our previous restrictions on stepsizes:
+
+\begin{align}
+    \frac{10}{\lambda(\xi + t)} \leq \frac{10}{\lambda \xi} \leq \min \{ \frac{1}{6L}, \frac{\lambda}{12\rho L^2} \}
+\end{align}
+
+Now we will denote the sequence of weights $\{w_t\}_{t=-1}^T := \{(t + \xi)^2\}_{t=-1}^T$. 
+
+Multiplying both sides of \eqref{eq:2604_2} by $w_t$ yields
+
+\begin{align}
+    w_t d_{t+1} \leq \alpha_t w_t d_t + w_t c_t \summ{j=t-a}{t} \beta_{j}^{(t-j)} d_j  + w_t A_t \label{2604_2}
+\end{align}
+
+Summarizing for $i$ from $t-a$ to $t$:
+
+\begin{align}
+    &\summ{i = t-a}{t} w_i d_{i+1} \leq \summ{i = t-a}{t} \alpha_i w_i d_i
+    + \summ{i=t-a}{t} w_i c_i \summ{j=i- i \mod H}{i} \beta_{j}^{(i-j)} d_j + \summ{i=t-a}{t} w_i A_i \\
+    &=
+    \summ{i = t-a}{t} \alpha_i w_i d_i
+    + \summ{i=t-a}{t} w_i c_i \summ{j=t-a}{i} \beta_{j}^{(i-j)} d_j + \summ{i=t-a}{t} w_i A_i \label{eq:2604_3}
+\end{align}
+
+Rearranging the double sum and denoting $x := t - a$:
+
+\begin{align}
+    &\summ{i=x}{t} w_i c_i \summ{j=x}{i} \beta_{j}^{(i-j)} d_j 
+    = w_{x}c_{x} [ \beta_{x}^{0}d_x ] 
+    + w_{x+1}c_{x+1} [\beta_{x}^1 d_x + \beta_{x+1}^0 d_{x+1}] \\
+    &+ w_{x+2}c_{x+2} [\beta_{x}^2 d_x + \beta_{x+1}^1 d_{x+1} + \beta_{x+2}^0 d_{x+2}] + ... + w_t c_t [\beta_{x}^a d_x + \beta_{x+1}^{(a-1)} d_{x+1} + ... + \beta_{t}^0 d_t] \\
+    &= d_x [w_x c_x \beta_{x}^0 + w_{x+1} c_{x+1} \beta_{x}^1 + ... + w_t c_t \beta_{x}^a]
+    \\
+    &+ d_{x+1} [w_{x+1} c_{x+1} \beta_{x+1}^0 + w_{x+2} c_{x+2} \beta_{x+1}^1 + ... + w_t c_t \beta_{x+1}^{(a-1)}] + ... + d_t [w_t c_t \beta_{t}^0] \\
+    &=\summ{i=x}{t} d_i \summ{j=i}{t} w_j c_j \beta_{i}^{(j-i)} \label{eq:2604_4}
+\end{align}
+
+Substituting \eqref{eq:2604_4} into \eqref{eq:2604_3},
+
+\begin{align}
+    \summ{i = x}{t} w_i d_{i+1}
+    \leq
+    \summ{i = x}{t} \alpha_i w_i d_i +
+    \summ{i=x}{t} d_i \summ{j=i}{t} w_j c_j \beta_{i}^{(j-i)} + \summ{i=x}{t} w_i A_i
+\end{align}
+
+Thus,
+
+\begin{align}
+    w_t d_{t+1} \leq \alpha_x w_x d_x
+    + \summ{i=x+1}{t} d_i \left(  \alpha_i w_i - w_{i-1} +  \summ{j=i}{t} w_j c_j \beta_{i}^{(j-i)} \right) + \summ{i=x}{t} w_i A_i \label{eq:2704_1}
+\end{align}
+
+Since our choice of $\xi$, for all $i$ we have:
+
+\begin{align}
+    &w_i c_i = (i + \xi)^2 \cdot \gamma_{i}^2 \rho L^2 \cdot \left( \frac{\gamma_{i}^2 \rho L^2}{M} + 2 \gamma_{i} L_R \right) 
+    = (i + \xi)^2 \cdot (\frac{10 }{\lambda(i + \xi)})^2 \rho L^2 \cdot \left( \frac{\gamma_{i}^2 \rho L^2}{M} + 2 \gamma_{i} L_R \right) \\
+    &= \frac{10^2}{\lambda^2} \rho L^2 \cdot \left( \frac{\gamma_{i}^2 \rho L^2}{M} + 2 \gamma_{i} L_R \right) = \frac{10^2 \gamma_{i}^2 \rho^2 L^4}{\lambda^2 M} + \frac{2\cdot10^2 \gamma_i \rho \varepsilon L^3 }{\lambda^2}
+    = \frac{10^2}{{(i + \xi)}^2}\cdot \frac{10^2 \rho^2 L^4}{\lambda^4 M} + \frac{2\cdot 10^3 \rho \varepsilon L^3}{\lambda^3 (i + \xi)} \\
+    &\leq \frac{1}{\xi^2} \cdot \frac{10^4 \rho^2 \kappa^4}{ M} + \frac{1}{\xi} \cdot 2\cdot 10^3 \rho \varepsilon \kappa^3 \leq \frac{1}{2} + \frac{1}{2} = 1
+\end{align}
+
+Now we will utilize this inequality for simplifying \eqref{eq:2704_1}
+
+\begin{align}
+    &w_t d_{t+1} \leq \alpha_x w_x d_x
+    + \summ{i=x+1}{t} d_i \left(  \alpha_i w_i - w_{i-1} + \summ{j=i}{t}\beta_{i}^{(j-i)} \right) + \summ{i=x}{t} w_i A_i \\
+    &\overset{\beta_i < 1}{\leq}
+    \alpha_x w_x d_x +
+    \summ{i=x+1}{t} d_i \left(  \alpha_i w_i - w_{i-1} +  \frac{1}{1 - \beta_i} \right) + \summ{i=x}{t} w_i A_i \\
+    &\overset{\eqref{eq:beta_def}}{=}
+    \alpha_x w_x d_x +
+    \summ{i=x+1}{t} d_i \left(  \alpha_i w_i - w_{i-1} + \frac{12}{\gamma_i \lambda} \right) + \summ{i=x+1}{t} w_i A_i \\
+    &= 
+    \alpha_x w_x d_x +
+    \summ{i=x+1}{t} d_i \left(  \alpha_i w_i - w_{i-1} + \frac{12}{\frac{10}{\lambda(i+\xi)} \lambda} \right) + \summ{i=x}{t} w_i A_i \\
+    &= \alpha_x w_x d_x +
+    \summ{i=x+1}{t} d_i \left(  \alpha_i w_i - w_{i-1} + 1.2(i + \xi) \right) + \summ{i=x}{t} w_i A_i \\
+    &= \alpha_x w_x d_x +
+    \summ{i=x+1}{t} d_i \left(  \alpha_i w_i - w_{i-1} + 1.2(i + \xi) \right) + \summ{i=x}{t} w_i A_i
+\end{align}
+
+Let us show that for all $i \geq -1$, coefficient of $d_i$ are less than zero, so we can omit them
+
+\begin{align}
+    &\alpha_i w_i - w_{i-1} + 1.2(i + \xi)
+    = (1 - \lambda \gamma_i)(i + \xi)^2 - (i + \xi - 1)^2 + 1.2(i + \xi) \\
+    &= (1 - \frac{5}{i + \xi})(i + \xi)^2 - (i + \xi - 1)^2 + 1.2(i + \xi) \\
+    &= (i + \xi - 5)(i + \xi) - (i + \xi - 1)^2 + 1.2(i + \xi) = -1.8i - 1.8\xi - 1 < 0
+\end{align}
+
+Thus,
+
+\begin{align}
+    &w_t d_{t+1} \leq \alpha_x w_x d_x + \summ{i=x}{t} w_i A_i
+\end{align}
+
+It also holds that $\alpha_i w_i \leq w_{i-1}$ for all $i \geq 0$
+\begin{align}
+    \alpha_i w_i = (1 - \frac{5}{i+\xi})(1 + i)^2 = (i + \xi - 5)(i + \xi) \leq (i + \xi - 1) = w_{i-1}
+\end{align}
+
+Thus,
+
+\begin{align}
+    &w_t d_{t+1} \leq w_{x-1} d_x + \summ{i=x}{t} w_i A_i
+\end{align}
+
+Recursing the inequality above, we get:
+
+\begin{align}
+    w_t d_{t+1} = (\xi + t)^2 d_{t+1} \leq w_{-1} d_0 + \summ{i=0}{t} w_i A_i = (\xi - 1)^2 d_0 + \summ{i=0}{t} w_i A_i \label{eq:2804_1}
+\end{align}
+
+By our choice of $\xi$, for all $i \geq 0$
+
+\begin{align}
+    &w_i A_i = (i + \xi)^2 \cdot \left( \frac{\gamma_{i}^2 \rho L^2}{M} + 2 \gamma_{i} \varepsilon L \right) \cdot (i \text{ mod } H) \gamma_{i}^2 \sigma^2 + (i + \xi)^2 \cdot \frac{\gamma_{i}^2 \sigma^2}{M} \\
+    &= (i+\xi)^2 \cdot \frac{\gamma_{i}^4 \rho L^4  \sigma^2}{M} \cdot (i \mod H)
+    + (i+\xi)^2 \cdot 2\gamma_{i}^3\varepsilon L \sigma^2 \cdot (i \mod H)
+    + (i + \xi)^2 \cdot \frac{\gamma_{i}^2 \sigma^2}{M} \\
+    &= \frac{10^4 \rho L^2 \sigma^2}{\lambda^4 M} \cdot \frac{i \mod H}{(i+\xi)^2} 
+    + \frac{2\cdot10^3\varepsilon L \sigma^2}{\lambda^3} \cdot \frac{i \mod H}{i+\xi}
+    + \frac{10^2\sigma^2}{\lambda^2 M} \\
+    &\leq
+    \frac{10^4 \rho L^2 \sigma^2}{\lambda^4 M} \cdot \frac{i \mod H}{(i+1)^2} 
+    + \frac{2\cdot10^3\varepsilon L \sigma^2}{\lambda^3} \cdot \frac{i \mod H}{i+1}
+    + \frac{10^2\sigma^2}{\lambda^2 M}
+\end{align}
+
+Let us denote:
+
+\begin{align}
+    &A^1 := \frac{10^4 \rho L^2 \sigma^2}{\lambda^4 M} \\
+    &A^2 := \frac{2\cdot10^3\varepsilon L \sigma^2}{\lambda^3} \\
+    &A^3 := \frac{10^2\sigma^2}{\lambda^2 M}
+\end{align}
+
+Then for $T = R\cdot H$ we can estimate the coefficient for $A^2$
+
+\begin{align}
+    &\summ{i=0}{T} \frac{i \mod H}{(i + 1)^2} 
+    \leq 
+    \summ{r=0}{R-1} \summ{h=0}{H-1} \frac{h}{(rH + h + 1)^2} \\
+    &=
+    \summ{r=0}{R-1} \left( \frac{0}{rH + 1} + \frac{1}{rH + 2} + \frac{2}{rH + 3} + ... +\frac{H - 1}{rH + H}\right) \\
+    &\leq
+    \summ{r=0}{R-1} \left( \frac{H}{rH + 1} + \frac{H}{rH + 2} + \frac{H}{rH + 3} + ... +\frac{H}{rH + H}\right) \\
+    &\leq
+    \summ{r=0}{R-1} H \cdot \frac{1}{r} \leq 2 H \log{R} 
+\end{align}
+
+Now we will estimate the coefficient for $A^1$
+
+\begin{align}
+    &\summ{i=0}{T} \frac{i \mod H}{(i + 1)^2} 
+    \leq 
+    \summ{i=0}{T} \frac{i}{(i + 1)^2} \leq 2 \log{T}
+\end{align}
+
+Combining relations above 
+
+\begin{align}
+    \summ{i=0}{T} w_i A_i \leq 2 \log{T} \cdot A^1  + 2 H \log{R} \cdot A^2  + T \cdot A^3
+\end{align}
+
+Plugging into \eqref{eq:2804_1},
+
+\begin{align}
+    d_{T} 
+    &\leq \left( \frac{\xi - 1}{\xi + T - 1} \right)^2 d_0 + \frac{1}{(\xi + T - 1)^2} \summ{i=0}{T - 1} w_i A_i \\
+    &\overset{\xi \geq 1}{\leq} \frac{\xi^2 + 1}{T^2} d_0 + \frac{1}{T^2} \left( 2 \log{T} \cdot A^1  + 2 H \log{R} \cdot A^2  + T \cdot A^3 \right) \\
+    &= \tilde{\O} \left( \frac{\xi^2}{T^2} d_0 + \frac{A^1}{T^2} + \frac{A^2}{TR} + \frac{A^3}{T} \right) \\
+    &= 
+    \tilde{\O} \left( \frac{\max \{ 60\kappa, 120\rho\kappa^2,  \sqrt{2}\cdot 100 \rho \kappa, 400 \rho \varepsilon \kappa^3 \}^2 }{T^2} d_0 + \frac{A^1}{T^2} + \frac{A^2}{TR} + \frac{A^3}{T} \right) \\
+    &= 
+    \tilde{\O} \left( \frac{\kappa^2 + \rho^2\kappa^4 +  \rho^2 \kappa^2 + \rho ^2\varepsilon^2 \kappa^6 }{T^2} d_0 + \frac{A^1}{T^2} + \frac{A^2}{TR} + \frac{A^3}{T} \right) \\
+    &\overset{\kappa \geq 1}{=}
+    \tilde{\O} \left( \frac{\kappa^2 + \rho^2\kappa^4 + \rho ^2\varepsilon^2 \kappa^6 }{T^2} d_0 + \frac{A^1}{T^2} + \frac{A^2}{TR} + \frac{A^3}{T} \right) \\
+    &=
+    \tilde{\O} \left( \frac{\kappa^2 + \rho^2\kappa^4 + \rho ^2\varepsilon^2 \kappa^6 }{T^2} d_0 
+    + \frac{\rho \kappa^2 \sigma^2}{\lambda^2 M T^2} 
+    + \frac{\varepsilon \kappa \sigma^2}{\lambda^2 TR} + \frac{\sigma^2}{\lambda^2 MT} \right)
+\end{align}

@@ -1,77 +1,23 @@
-We will leverage the insights from Lemma~\ref{lem:main} to enhance the proofs of Theorem 1 from \cite{Khaled}, thereby obtaining more precise results.
-
 \begin{proof}
-    Consider $\mu > 0$ 
-    and $\gamma \leq \min \{ \frac{1}{6L},\ \frac{\mu}{12\rho L^2},\ .... \}$
-    and for all $t$ it is true that $\norm{r_{t+1}}^2 \geq (1 - \frac{\gamma \mu}{12})\norm{r_t}^2$.
+    Consider $\mu > 0$ and $\rho = 0$. We will choose tune stepsizes $\gamma_t$ as in Theorem 2 \citep{Woodworth}.
 
-    Then let us substitute results of the previous subsection (i.e. Lemmas~\ref{lem:var_red}
-and~\ref{lem:lemma_Vt}) into the Lemma~\ref{lem:very_main} and conduct algebraic manipulations.
-\begin{align}
-    \E \norm{r_{t+1}}^2
-    &\leq (1 - \gamma \mu) \E \norm{r_t}^2 
-    + \gamma^2 \E \norm{ \bar{\mc{g_t}} - \bar{g}_t}^2
-    - \frac{\gamma}{6} \E [F(\bar{x}_t) - F_*] 
-    + 2 \gamma L_R \E [V_t] \\
-    &\overset{\ref{lem:var_red}, \ref{lem:lemma_Vt}}{\leq}
-    (1 - \gamma \mu) \E \norm{r_t}^2 
-    + \gamma^2 
-    \left(\frac{\sigma^2}{M} + \frac{\rho L^2 }{M} V_t  + \frac{\rho L^2 }{M} \norm{r_t}^2 \right) \\
-    &+ 2 \gamma L_R 
-    \left((H-1) \gamma^2 \sigma^2 + (H-1) \rho \gamma^2 L^2 \E \norm{r_t}^2 \right) \\
-    &= (1 - \gamma \mu) \E \norm{r_t}^2 
-    + \frac{\gamma^2 \sigma^2}{M} + \frac{\gamma^2 \rho L^2 }{M} V_t  + \frac{\gamma^2 \rho L^2 }{M} \norm{r_t}^2 \\
-    &+ 
-    2 L_R (H-1) \gamma^3 \sigma^2 + 2 L_R (H-1) \rho \gamma^3 L^2 \E \norm{r_t}^2 \\
-    &=
-    \left( 1 - \gamma \mu + \frac{\gamma^2 \rho L^2 }{M} + 2 L_R (H-1) \rho \gamma^3 L^2 \right)
-    \E \norm{r_t}^2 \\
-    &+ \frac{\gamma^2 \sigma^2}{M} + 2 L_R (H-1) \gamma^3 \sigma^2 + 2 L_R (H-1) \gamma^2 \sigma^3
-    + \frac{\gamma^2 \rho L^2 }{M} V_t \\
-\end{align}
+    By substituting the results obtained in Lemma~\ref{lem:g_t} and point a of Lemma~\ref{lem:lemma_Vt} into Lemma~\ref{lem:very_main},
 
-By estimating $V_t$ again,
+    
+    \begin{align}
+        \E \norm{r_{t+1}}^2
+        &\leq
+        (1 - \gamma \lambda)\E \norm{r_t}^2 
+        + \frac{\gamma^2 \sigma^2}{M} + 4 L_R (H-1) \gamma^3 \sigma^2 \label{eq:interesting}
+    \end{align}
+    
+    Recursing the equation above, we obtain
+    \begin{align}
+        \E \norm{\bar{x}_{T}-x_*}^2 
+        & \leq (1 - \gamma \lambda)^T \E \norm{\bar{x}_0 - x_*}^2 
+        + \frac{\gamma \sigma^2} {\lambda M} 
+        + \frac{2 L_R (H-1) \gamma^2 \sigma^2}{\lambda}
+    \end{align}
 
-\begin{align}
-    \E \norm{r_{t+1}}^2 
-    &\overset{\ref{lem:lemma_Vt},\ ???\E}{\leq}
-    \left( 1 - \gamma \mu + \frac{\gamma^2 \rho L^2 }{M} + 2 L_R (H-1) \rho \gamma^3 L^2 \right)
-    \E \norm{r_t}^2 \\
-    &+ \frac{\gamma^2 \sigma^2}{M} + 2 L_R (H-1) \gamma^3 \sigma^2 + \frac{\gamma^2 \rho L^2 }{M} \left((H-1) \gamma^2 \sigma^2 + (H-1) \rho \gamma^2 L^2 \E \norm{r_t}^2 \right) \\
-    &\leq
-    \left( 1 - \gamma \mu + \frac{\gamma^2 \rho L^2 }{M} + 2 L_R H \rho \gamma^3 L^2 \right)
-    \E \norm{r_t}^2 \\
-    &+ \frac{\gamma^2 \sigma^2}{M} + 2 L_R (H-1) \gamma^3 \sigma^2 + \frac{\gamma^2 \rho L^2 }{M} \left((H-1) \gamma^2 \sigma^2 + H \rho \gamma^2 L^2 \E \norm{r_t}^2 \right) \\
-    &\overset{L_R = \varepsilon L}{=}
-    \left( 1 - \gamma \mu + \frac{\gamma^2 \rho L^2 }{M} + 2 \varepsilon H \rho \gamma^3 L^3 + \frac{\gamma^4 H \rho^2 L^4 }{M} \right)
-    \E \norm{r_t}^2 \\
-    &+ \frac{\gamma^2 \sigma^2}{M} + 2 \varepsilon L (H-1) \gamma^3 \sigma^2 + \frac{\gamma^4 \rho L^2 }{M} (H-1)\sigma^2
-\end{align}
-
-
-% Теперь оценим коэффициент перед $\E \norm{r_t}^2$
-% \begin{itemize}
-%     \item[a)] \( \frac{\gamma^2 \rho L^2 }{M} \leq \frac{\gamma \mu}{4} \)
-%     \item[b)] \( 2 L_R H \rho \gamma^3 L^2 \leq \frac{\gamma \mu}{4} \)
-%     \item[c)] \( H \rho \gamma^2 L^2 \leq \frac{\gamma \mu}{4} \)
-% \end{itemize}
-
-Due to our restrictions on the stepsize,
-
-\begin{align}
-    &1 - \gamma \mu + \frac{\gamma^2 \rho L^2 }{M} + 2 \varepsilon H \rho \gamma^3 L^3 + \frac{\gamma^4 H \rho^2 L^4 }{M} \\
-    &\leq
-    1 - \gamma \mu + \frac{\gamma \mu}{4} + \frac{\gamma \mu}{4} + \frac{\gamma \mu}{4} \leq
-    1 - \frac{\gamma \mu}{4}
-\end{align}
-
-Thus,
-
-\begin{align}
-    \E \norm{r_{t+1}}^2
-    &\leq
-    (1 - \frac{\gamma \mu}{4})\E \norm{r_t}^2 
-    + \frac{\gamma^2 \sigma^2}{M} + 2 \varepsilon L (H-1) \gamma^3 \sigma^2 + \frac{\gamma^4 \rho L^2 }{M} (H-1) \sigma^2
-\end{align}
-
+    It remains to notice that by the statement~\ref{st:st_1} we have $L_R = \varepsilon L$.
 \end{proof}

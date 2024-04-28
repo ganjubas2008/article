@@ -1,27 +1,32 @@
-Things get more interesting in perspective of expressing $\E[\norm{\bar{x}_{t+1} - x_*}^2]$ through $\E[\norm{\bar{x}_{t} - x_*}^2]$ instead of solving recurrent relation and analyzing $\E[\norm{\bar{x}_T - x_*}^2]$. 
+Things get more interesting when we consider expressing $\E[\|\bar{x}_{t+1} - x_*\|^2]$ in terms of $\E[\|\bar{x}_{t} - x_*\|^2]$ instead of solving a recurrent relation and analyzing $\E[\|\bar{x}_T - x_*\|^2]$.
 
-%We'll go deeper into the strongly convex case because it's more intuitive.
+\vspace{10pt}
 
-As can be observed from~\ref{lem:main}:
+As can be observed from \eqref{eq:interesting}, under the assumptons of Theorem~\ref{th:th_1}, we have:
 \begin{align}
-     \E \norm{\bar{x}_{t+1}-x_*}^2
+    \E \|\bar{x}_{t+1}-x_*\|^2
     &\leq
-    (1 - \gamma \mu) \E \norm{\bar{x}_t - x_*}^2 
+    (1 - \gamma \mu) \E \|\bar{x}_t - x_*\|^2 
     + \frac{\gamma^2 \sigma^2}{M}
-    + 10 \varepsilon \gamma L (H-1) \gamma^2 \sigma^2 \label{eq:recurrent}
+    + 2 \varepsilon \gamma L (H-1) \gamma^2 \sigma^2 \label{eq:recurrent}
 \end{align}
 
-Considering $\varepsilon$ as a function of $x$, we can say that for the functions with Lipschitz Hessian we know that the decay rate of $\varepsilon$ is fast. Following graphs illustrate decay rate of $\varepsilon$ for some functions:
+Здесь хочется больше услышать про формальную сторону вопроса, типа эпсилон выбираем оптимально
+
+
+{\color{red}
+Considering $\varepsilon$ as a function of $x$, we can observe that for functions with a Lipschitz Hessian, we know that the decay rate of $\varepsilon$ is fast. The following graphs illustrate the decay rate of $\varepsilon$ for some functions:
+}
 
 \input{graphs/EpsGraphs}
 \\
 
-In point (b) by LogLoss we mean 
+In point (b), by LogLoss with $l_2$ regularization, we mean 
 \begin{equation} \label{eq:logloss}
-    y = -\ln\left(\frac{1}{1 + e^{-x}} \right) + 0.03 {x^2}
+    y = -\ln\left(\frac{1}{1 + e^{-x}} \right) + 0.03 x^2
 \end{equation}
 
-And in point (c) we analyze well-known function that yields lower bound estimates for Local SGD \citep{LowerBound}.
+And in point (c), we analyze a well-known function that yields lower bound estimates for Local SGD \citep{LowerBound}:
 \begin{equation} \label{eq:piecewise}
     \mathcal{F}(x) = \begin{cases} 
       x^2 / 5 & \text{if } x < 0 \\
@@ -29,9 +34,16 @@ And in point (c) we analyze well-known function that yields lower bound estimate
    \end{cases}
 \end{equation}
 
-Here we can notice that for functions (a) and (b) $\varepsilon$ decreases rapidly (because they satisfy Lipschitz Hessian assumption), and for function (c) it remains constant. This may be considered as some additional insight into why 
-$\mathcal{F}$ yields lower bound for Local SGD.
+Here, we notice that for functions (a) and (b), $\varepsilon$ decreases rapidly because they satisfy the Lipschitz Hessian assumption, the proof of this fact can be found in Lemma \ref{lem:decay_eps}. Due to the decay of $\varepsilon$ we can increase number of local steps $H$ or reduce number of communcations $R$, which means enhancing communcation complexity.
 
-From this example we can observe that equation~\ref{eq:recurrent} provides valuable insights into convergence rate for different types of functions. However, abandoning the assumption of a Lipschitz Hessian means that we cannot estimate the decay rate of epsilon. Therefore conducting a meaningful asymptotic analysis while maintaining generality seems impossible.
+\vspace{10pt}
 
-Thus our aim is to present our findings within a broader scope, elucidating the physical interpretation of the convergence rate.
+However, for function (c), $\varepsilon$ remains constant in any neighborhood of its optimum. This may provide additional insight into why $\mathcal{F}$ yields lower bounds for Local SGD.
+
+\vspace{10pt}
+
+From this example, we can observe that equation~\ref{eq:recurrent} provides valuable insights into the convergence rate for different types of functions. However, abandoning the assumption of a Lipschitz Hessian means that we cannot estimate the decay rate of $\varepsilon$. Therefore, conducting a meaningful asymptotic analysis while maintaining generality seems impossible.
+
+\vspace{10pt}
+
+Thus, our aim is to present our findings within a broader scope, elucidating the physical interpretation of the convergence rate.
